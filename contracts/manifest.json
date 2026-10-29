@@ -1,0 +1,44 @@
+{
+  "contractVersion": "0.1.0-draft.1",
+  "status": "preview",
+  "owner": "automated-qa-engine",
+  "engineVersion": "0.1.0-alpha.2",
+  "schemas": [
+    "qa.flow/v1",
+    "qa.testcase/v1",
+    "qa.suite/v1",
+    "qa.selectors/v1",
+    "qa.target/v1",
+    "qa.runRequest/v1",
+    "qa.runEvent/v1",
+    "qa.result/v1",
+    "qa.capabilities/v1",
+    "qa.evidence/v1",
+    "qa.blueprint/v1",
+    "qa.plan/v1"
+  ],
+  "actions": [
+    "launch",
+    "tap",
+    "input",
+    "clear",
+    "waitFor",
+    "assertVisible",
+    "assertText",
+    "assertValue",
+    "screenshot"
+  ],
+  "outcomes": [
+    "passed",
+    "failed",
+    "skipped",
+    "blocked",
+    "infra_error",
+    "cancelled"
+  ],
+  "release": {
+    "tag": null,
+    "artifact": null,
+    "sha256": null
+  }
+}

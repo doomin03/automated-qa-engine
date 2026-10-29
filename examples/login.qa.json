@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "qa.blueprint/v1",
+  "id": "demo-login",
+  "name": "로컬 로그인 QA",
+  "flow": {
+    "schemaVersion": "qa.flow/v1",
+    "id": "login-flow",
+    "entryNode": "start",
+    "variables": {
+      "username": {
+        "from": "literal",
+        "value": "qa-user"
+      }
+    },
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "open",
+        "type": "action",
+        "action": "launch",
+        "params": {
+          "target": "login"
+        }
+      },
+      {
+        "id": "name",
+        "type": "action",
+        "action": "input",
+        "params": {
+          "selector": "username",
+          "valueRef": "username"
+        }
+      },
+      {
+        "id": "submit",
+        "type": "action",
+        "action": "tap",
+        "params": {
+          "selector": "submit"
+        }
+      },
+      {
+        "id": "home",
+        "type": "assertion",
+        "action": "assertText",
+        "params": {
+          "selector": "greeting",
+          "expected": "Welcome qa-user"
+        },
+        "timeoutMs": 3000
+      },
+      {
+        "id": "capture",
+        "type": "action",
+        "action": "screenshot",
+        "params": {}
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "open"
+      },
+      {
+        "from": "open",
+        "to": "name"
+      },
+      {
+        "from": "name",
+        "to": "submit"
+      },
+      {
+        "from": "submit",
+        "to": "home"
+      },
+      {
+        "from": "home",
+        "to": "capture"
+      },
+      {
+        "from": "capture",
+        "to": "end"
+      }
+    ]
+  },
+  "selectors": {
+    "schemaVersion": "qa.selectors/v1",
+    "id": "demo-selectors",
+    "selectors": {
+      "username": {
+        "web": {
+          "strategy": "testId",
+          "value": "username"
+        }
+      },
+      "submit": {
+        "web": {
+          "strategy": "testId",
+          "value": "submit"
+        }
+      },
+      "greeting": {
+        "web": {
+          "strategy": "testId",
+          "value": "greeting"
+        }
+      }
+    }
+  },
+  "target": {
+    "schemaVersion": "qa.target/v1",
+    "id": "local-web",
+    "platform": "web",
+    "launchTargets": {
+      "login": "http://127.0.0.1:4317"
+    },
+    "allowedOrigins": [
+      "http://127.0.0.1:4317"
+    ],
+    "environment": "local"
+  }
+}
+

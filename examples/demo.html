@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Local QA fixture</title><body>
+<h1>QA local demo</h1><label>Name <input data-testid="username" autocomplete="off"></label>
+<button data-testid="submit" type="button">Continue</button><p data-testid="greeting" hidden></p>
+<script>document.querySelector('button').onclick=()=>{const out=document.querySelector('p');out.textContent='Welcome '+document.querySelector('input').value;out.hidden=false;};</script>
+</body></html>
+

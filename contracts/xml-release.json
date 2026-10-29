@@ -1,0 +1,9 @@
+{
+  "status": "local-preview",
+  "artifact": "qa-blueprint-0.1.0-alpha.2.xml",
+  "engineVersion": "0.1.0-alpha.2",
+  "contractVersion": "0.1.0-draft.1",
+  "schemaVersion": "qa.blueprint/v1",
+  "sha256": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+  "blueprintSnapshotHash": "sha256:1e24d3c9a5217aa706a02a4ef7620192673f508bb19fbd2e661a13e9756589a1"
+}
