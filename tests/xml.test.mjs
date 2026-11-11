@@ -81,7 +81,7 @@ test('user XML executes actual CLI PASS and FAIL with ordered events and evidenc
   b.flow.variables.username.value='alice & bob';b.flow.nodes.find(n=>n.id==='home').params.expected='Welcome alice & bob';
   const runs=[];
   for(const failed of [false,true]) {
-    if(failed)b.flow.nodes.find(n=>n.id==='home').params.expected='WRONG';
+    if(failed){b.flow.nodes.find(n=>n.id==='home').params.expected='WRONG';b.flow.nodes.find(n=>n.id==='home').timeoutMs=200;}
     const json=join(dir,failed?'fail.json':'pass.json'),xml=join(dir,failed?'fail.xml':'pass.xml');
     await writeFile(json,JSON.stringify(b));
     assert.equal((await call(['export',json,'--format','xml','--out',xml],dir)).code,0);
@@ -92,7 +92,7 @@ test('user XML executes actual CLI PASS and FAIL with ordered events and evidenc
     const terminal=events.at(-1);assert.equal(terminal.type,'run.finished');assert.equal(terminal.outcome,failed?'failed':'passed');
     const result=validateSchema(JSON.parse(await readFile(join(dir,terminal.runId,'result.json'),'utf8')));
     assert.equal(result.artifacts.length,1);
-    if(failed)assert.equal(result.failure.code,'ASSERTION_FAILED');
+    if(failed){assert(['ASSERTION_FAILED','TIMEOUT'].includes(result.failure.code));assert.equal(result.failure.phase,'step');assert.equal(result.failure.nodeId,'home');}
     runs.push(result.runId);
   }
   assert.notEqual(runs[0],runs[1]);

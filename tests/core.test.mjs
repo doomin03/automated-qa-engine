@@ -18,7 +18,7 @@ for(const [label,mutate,code] of [
   ['cycle', b=>b.flow.edges.find(e=>e.from==='home').to='open','INVALID_FLOW'],
   ['unreachable node', b=>b.flow.nodes.push({id:'orphan',type:'end'}),'INVALID_FLOW'],
   ['unknown selector', b=>b.flow.nodes[2].params.selector='missing','INVALID_FLOW'],
-  ['unsupported platform', b=>b.target.platform='android','UNSUPPORTED_CAPABILITY'],
+  ['unsupported platform', b=>b.target.platform='androidtv','UNSUPPORTED_CAPABILITY'],
   ['unsafe retry', b=>b.flow.nodes[3].retry={maxRetries:1},'POLICY_DENIED'],
   ['wrong origin', b=>b.target.launchTargets.login='https://example.com','POLICY_DENIED'],
   ['shell action', b=>b.flow.nodes[3].action='shell','INVALID_DOCUMENT']

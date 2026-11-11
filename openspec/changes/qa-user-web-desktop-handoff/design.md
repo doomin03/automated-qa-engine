@@ -42,6 +42,8 @@
 
 ## Review State
 
+후속 문서 범위: 기존 reusable-package의 사용·라이프사이클 설명을 확장하는 내부 구조 리뷰를 `docs/architecture/engine-review.md`에 작성하고 `docs/README.md`에서 연결한다. 제품 기능이나 실행 계약을 추가하지 않으며 새 제품 spec 없이 task 5.1로 추적한다. 이미 인수한 7개 task의 완료 근거는 유지한다. 내부 리뷰는 npm 배포 목록에 추가하지 않아 검증된 alpha.2 tgz를 재생성하지 않는다.
+
 2026-10-29 관리 에이전트가 양쪽 OpenSpec를 검토한 뒤 적용 업무를 재할당했다. XML/패키지 API/타입과 alpha.2 local-preview 산출물을 구현하고 전체 39개 tests 및 독립 tgz 소비 인수를 통과했다. 기준 spec sync/archive와 Checker pin 갱신은 이번 작업에서 하지 않았다.
 
 검증 보강: TypeScript 6.0.3은 devDependency로만 고정했다. onEvent 실패 후 callback을 중단하고 durable events/result를 계속 기록하며, callback 무응답은 run deadline/AbortSignal로 제한한다. terminal 전달은 불변 result 저장 이후 1초 제한이며 실패 시 API만 ENGINE_ERROR로 reject한다. 실패 evidence는 3초, session cleanup은 5초로 제한하며 원래 assertion 판정을 보존한다.

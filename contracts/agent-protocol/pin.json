@@ -1,0 +1,7 @@
+{
+  "protocolVersion": "0.1.0-draft.1",
+  "sha256": "8c25e3c853f3b8d24003464d2ddc55a20675b7ac3f741a46c238a50ce4149490",
+  "artifact": "0.1.0-draft.1/openapi.json",
+  "sourceRepository": "automated-qa-checker",
+  "sourcePath": "packages/contract/agent-protocol/v0.1.0-draft.1/openapi.json"
+}

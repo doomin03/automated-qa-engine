@@ -1,0 +1,2619 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Automated QA Agent HTTP Protocol — review draft",
+    "version": "0.1.0-draft.1",
+    "description": "관리 검토용 미구현 계약. Checker DTO/offline OpenAPI 구현 후 정본 승격. Engine schema는 opaque JSON으로 소비하며 복제하지 않는다."
+  },
+  "x-status": "review-draft-not-implemented",
+  "x-limits": {
+    "httpBodyBytes": 16777216,
+    "engineJsonBytes": 1048576,
+    "artifactBytes": 10485760,
+    "executionArtifactBytes": 67108864,
+    "eventBatchBytes": 2097152,
+    "claimResponseBytes": 8388608,
+    "firstImplementationCaseCount": 1,
+    "leaseBytes": 7340032,
+    "reconcileResponseBytes": 8388608
+  },
+  "paths": {
+    "/api/v1/agent/claims": {
+      "post": {
+        "operationId": "claimAgentExecution",
+        "summary": "영속 requestId로 작업 배정. 재시도는 identity만 재현하며 TTL 연장 없음.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "검증된 응답",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClaimResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "대기 작업 없음. 같은 claimRequestId는 같은 empty 결정을 재현한다."
+          },
+          "400": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "agentBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agent/leases/{leaseId}/heartbeat": {
+      "post": {
+        "operationId": "heartbeatAgentLease",
+        "summary": "유효 holder만 연장. active/reporting에서 monotonic deadline을 보수 계산.",
+        "parameters": [
+          {
+            "name": "leaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "검증된 응답",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartbeatResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "agentBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeartbeatRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agent/leases/{leaseId}/events": {
+      "post": {
+        "operationId": "appendAgentDeliveries",
+        "summary": "deliverySequence와 Engine sequence를 별도로 검증하는 원자 배치.",
+        "parameters": [
+          {
+            "name": "leaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "검증된 응답",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "agentBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventsRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agent/leases/{leaseId}/complete": {
+      "put": {
+        "operationId": "completeAgentExecution",
+        "summary": "실제 case results와 cleanup/bytes 상태 분리. 누락 bytes 중에는 reporting 유지; 모두 확인되면 receipt와 deliveryClosed.",
+        "parameters": [
+          {
+            "name": "leaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "검증된 응답",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompleteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "agentBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agent/reconcile": {
+      "post": {
+        "operationId": "reconcileAgentInstance",
+        "summary": "서버 outstanding lease까지 반환. 새 instance는 실행 resume 금지.",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 512
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "검증된 응답",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReconcileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "agentBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReconcileRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agent/leases/{leaseId}/resources/{resourceId}": {
+      "get": {
+        "operationId": "downloadAgentResource",
+        "summary": "고정 manifest의 opaque resourceId만 다운로드. URL/경로 입력 없음.",
+        "parameters": [
+          {
+            "name": "leaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "resourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "agentId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fence",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "검증된 응답",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceBytes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "agentBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/agent/leases/{leaseId}/artifacts": {
+      "put": {
+        "operationId": "uploadAgentArtifact",
+        "summary": "case/fence/manifest에 묶인10MiB bytes 업로드. 실행 전체64MiB.",
+        "parameters": [
+          {
+            "name": "leaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "검증된 응답",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtifactReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "agentBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArtifactUploadRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agent/leases/{leaseId}/historical-evidence": {
+      "post": {
+        "operationId": "recordHistoricalAgentEvidence",
+        "summary": "expired/quarantined/closed 원본 증거 별도 보관. 실행권/TTL/정상 cursor/자원 lock 절대 변경 없음.",
+        "parameters": [
+          {
+            "name": "leaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "검증된 응답",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoricalEvidenceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "agentBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HistoricalEvidenceRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agent/instances/release": {
+      "post": {
+        "operationId": "releaseAgentInstance",
+        "summary": "모든 lease cleanup confirmed·증거완료·terminal receipt ack 이후 transaction으로 owner 해제.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "검증된 응답",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstanceReleaseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "공통 오류. 상태를 확인하기 전 실행하지 않는다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "agentBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstanceReleaseRequest"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "agentBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "등록 Agent 전용 credential. 사용자 local token과 분리."
+      }
+    },
+    "schemas": {
+      "ApiErrorResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              },
+              "required": [
+                "field",
+                "code",
+                "message"
+              ]
+            },
+            "minItems": 0,
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "requestId",
+          "details"
+        ]
+      },
+      "ClaimRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "instanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "claimRequestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "protocolVersion": {
+            "type": "string",
+            "enum": [
+              "0.1.0-draft.1"
+            ]
+          },
+          "engineVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "engineContractVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "capabilities": {
+            "$ref": "#/components/schemas/CapabilitySet"
+          },
+          "resourceKeys": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "minItems": 0,
+            "maxItems": 100
+          },
+          "projectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "minItems": 0,
+            "maxItems": 100
+          },
+          "engineContractSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA-256 of exact public Engine contracts/releases/qa-contract-<engineVersion>.json bytes; not the runtime file manifest or npm tarball hash."
+          }
+        },
+        "required": [
+          "agentId",
+          "instanceId",
+          "claimRequestId",
+          "protocolVersion",
+          "engineVersion",
+          "engineContractVersion",
+          "engineContractSha256",
+          "capabilities",
+          "resourceKeys",
+          "projectIds"
+        ]
+      },
+      "ResourceManifest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resourceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 512,
+            "pattern": "^(?!.*\\.\\.)(?:[A-Za-z0-9_-][A-Za-z0-9_.-]{0,63}/)*[A-Za-z0-9_-][A-Za-z0-9_.-]{0,127}\\.(png|json|woff|woff2|ttf|otf)$",
+            "description": "Safe ASCII slash-separated path relative to isolated document root; reject absolute/UNC/backslash/traversal/symlink/case-fold collisions."
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10485760
+          },
+          "mimeType": {
+            "type": "string",
+            "enum": [
+              "image/png",
+              "application/json",
+              "font/woff",
+              "font/woff2",
+              "font/ttf",
+              "font/otf"
+            ]
+          }
+        },
+        "required": [
+          "resourceId",
+          "name",
+          "sha256",
+          "size",
+          "mimeType"
+        ]
+      },
+      "CaseSnapshot": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "caseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "blueprintJson": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 1048576,
+            "description": "Opaque Engine JSON; exact public Engine schema, UTF-8 byte/depth limits and immutable snapshot validation apply."
+          },
+          "blueprintSnapshotHash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceManifest"
+            },
+            "minItems": 0,
+            "maxItems": 128
+          },
+          "publishedVersion": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "versionId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "versionId",
+              "sha256"
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "caseId",
+          "blueprintJson",
+          "blueprintSnapshotHash",
+          "resources",
+          "publishedVersion"
+        ]
+      },
+      "Lease": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "instanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "leaseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "executionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "jobAttempt": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "fence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "resourceKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "cases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CaseSnapshot"
+            },
+            "minItems": 1,
+            "maxItems": 32
+          },
+          "engineVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "engineContractVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "protocolVersion": {
+            "type": "string",
+            "enum": [
+              "0.1.0-draft.1"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "reporting",
+              "closed",
+              "expired",
+              "quarantined",
+              "recovered"
+            ]
+          },
+          "validForMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 30000
+          },
+          "heartbeatIntervalMs": {
+            "type": "integer",
+            "enum": [
+              5000
+            ]
+          },
+          "requestTimeoutMs": {
+            "type": "integer",
+            "enum": [
+              5000
+            ]
+          },
+          "safetyMarginMs": {
+            "type": "integer",
+            "enum": [
+              5000
+            ]
+          },
+          "cancelRequested": {
+            "type": "boolean"
+          },
+          "acceptedThrough": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "engineContractSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA-256 of exact public Engine contracts/releases/qa-contract-<engineVersion>.json bytes; not the runtime file manifest or npm tarball hash."
+          },
+          "executionPolicy": {
+            "$ref": "#/components/schemas/ExecutionPolicy"
+          },
+          "suitePolicy": {
+            "$ref": "#/components/schemas/SuitePolicy"
+          }
+        },
+        "required": [
+          "agentId",
+          "instanceId",
+          "leaseId",
+          "executionId",
+          "projectId",
+          "jobAttempt",
+          "fence",
+          "resourceKey",
+          "cases",
+          "engineVersion",
+          "engineContractVersion",
+          "engineContractSha256",
+          "protocolVersion",
+          "state",
+          "validForMs",
+          "heartbeatIntervalMs",
+          "requestTimeoutMs",
+          "safetyMarginMs",
+          "cancelRequested",
+          "acceptedThrough",
+          "executionPolicy",
+          "suitePolicy"
+        ]
+      },
+      "ClaimResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "claimRequestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lease": {
+            "$ref": "#/components/schemas/Lease"
+          }
+        },
+        "required": [
+          "claimRequestId",
+          "lease"
+        ]
+      },
+      "HeartbeatRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "instanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "lastAcknowledgedSequence": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "cleanupState": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "unknown",
+              "failed"
+            ]
+          }
+        },
+        "required": [
+          "agentId",
+          "instanceId",
+          "fence",
+          "lastAcknowledgedSequence",
+          "cleanupState"
+        ]
+      },
+      "HeartbeatResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "leaseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "validForMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 30000
+          },
+          "cancelRequested": {
+            "type": "boolean"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "reporting",
+              "expired",
+              "quarantined"
+            ]
+          },
+          "acceptedThrough": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "leaseId",
+          "fence",
+          "validForMs",
+          "cancelRequested",
+          "state",
+          "acceptedThrough"
+        ]
+      },
+      "Delivery": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "deliverySequence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "caseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "engineEventJson": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 1048576,
+            "description": "Opaque Engine JSON; exact public Engine schema, UTF-8 byte/depth limits and immutable snapshot validation apply."
+          }
+        },
+        "required": [
+          "deliverySequence",
+          "caseId",
+          "engineEventJson"
+        ]
+      },
+      "EventsRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "instanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Delivery"
+            },
+            "minItems": 1,
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "agentId",
+          "instanceId",
+          "fence",
+          "events"
+        ]
+      },
+      "EventsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "leaseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "acceptedThrough": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "leaseId",
+          "fence",
+          "acceptedThrough"
+        ]
+      },
+      "CaseResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "caseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "resultJson": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 1048576,
+            "description": "Opaque Engine JSON; exact public Engine schema, UTF-8 byte/depth limits and immutable snapshot validation apply."
+          }
+        },
+        "required": [
+          "caseId",
+          "resultJson"
+        ]
+      },
+      "ArtifactManifest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "caseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_.-]{0,250}\\.(png|json)$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10485760
+          },
+          "mimeType": {
+            "type": "string",
+            "enum": [
+              "image/png",
+              "application/json"
+            ]
+          }
+        },
+        "required": [
+          "caseId",
+          "path",
+          "sha256",
+          "size",
+          "mimeType"
+        ]
+      },
+      "ArtifactReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "caseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_.-]{0,250}\\.(png|json)$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10485760
+          },
+          "mimeType": {
+            "type": "string",
+            "enum": [
+              "image/png",
+              "application/json"
+            ]
+          },
+          "artifactId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "uploaded": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "caseId",
+          "path",
+          "sha256",
+          "size",
+          "mimeType",
+          "artifactId",
+          "uploaded"
+        ]
+      },
+      "CompleteRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "instanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "caseResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CaseResult"
+            },
+            "minItems": 0,
+            "maxItems": 32
+          },
+          "executionStatus": {
+            "type": "string",
+            "enum": [
+              "finished",
+              "blocked",
+              "infra_error",
+              "cancelled"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 4096
+          },
+          "cleanupState": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "unknown",
+              "failed"
+            ]
+          },
+          "artifactManifest": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArtifactManifest"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          }
+        },
+        "required": [
+          "agentId",
+          "instanceId",
+          "fence",
+          "caseResults",
+          "executionStatus",
+          "reason",
+          "cleanupState",
+          "artifactManifest"
+        ]
+      },
+      "CompleteResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "leaseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "accepted": {
+            "type": "boolean"
+          },
+          "acceptedThrough": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "completionReceipt": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "deliveryClosed": {
+            "type": "boolean"
+          },
+          "evidenceStatus": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "missing",
+              "verified"
+            ]
+          },
+          "cleanupState": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "unknown",
+              "failed"
+            ]
+          },
+          "quarantined": {
+            "type": "boolean"
+          },
+          "artifacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArtifactReceipt"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          }
+        },
+        "required": [
+          "leaseId",
+          "fence",
+          "accepted",
+          "acceptedThrough",
+          "completionReceipt",
+          "deliveryClosed",
+          "evidenceStatus",
+          "cleanupState",
+          "quarantined",
+          "artifacts"
+        ]
+      },
+      "KnownLease": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "leaseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "ownerInstanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lastAcknowledgedSequence": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "cleanupState": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "unknown",
+              "failed"
+            ]
+          },
+          "terminalResultHashes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "caseId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "caseId",
+                "sha256"
+              ]
+            },
+            "minItems": 0,
+            "maxItems": 32
+          }
+        },
+        "required": [
+          "leaseId",
+          "fence",
+          "ownerInstanceId",
+          "lastAcknowledgedSequence",
+          "cleanupState",
+          "terminalResultHashes"
+        ]
+      },
+      "ReconcileRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "instanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "knownLeases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KnownLease"
+            },
+            "minItems": 0,
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "agentId",
+          "instanceId",
+          "knownLeases"
+        ]
+      },
+      "ReconcileDecision": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "lease": {
+            "$ref": "#/components/schemas/Lease"
+          },
+          "directive": {
+            "type": "string",
+            "enum": [
+              "resume",
+              "cancel",
+              "quarantine",
+              "observe"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "cleanupState": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "unknown",
+              "failed"
+            ]
+          },
+          "completionReceipt": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "deliveryClosed": {
+            "type": "boolean"
+          },
+          "evidenceStatus": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "missing",
+              "verified"
+            ]
+          },
+          "operatorRecovery": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OperatorRecovery"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "lease",
+          "directive",
+          "reason",
+          "cleanupState",
+          "completionReceipt",
+          "deliveryClosed",
+          "evidenceStatus",
+          "operatorRecovery"
+        ]
+      },
+      "ReconcileResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "instanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "instanceState": {
+            "type": "string",
+            "enum": [
+              "active",
+              "observer",
+              "quarantined",
+              "released"
+            ]
+          },
+          "decisions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReconcileDecision"
+            },
+            "minItems": 0,
+            "maxItems": 100
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "nextCursor": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 512
+          }
+        },
+        "required": [
+          "agentId",
+          "instanceId",
+          "instanceState",
+          "decisions",
+          "hasMore",
+          "nextCursor"
+        ],
+        "description": "Maximum serialized response 8 MiB. Server sizes each page by bytes and count; one serialized Lease is capped at 7 MiB. Follow all nextCursor pages before deciding to claim. validForMs is recomputed remaining TTL at this response, anchored by Agent request-start monotonic time."
+      },
+      "ArtifactUploadRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "instanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "caseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "artifactId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mimeType": {
+            "type": "string",
+            "enum": [
+              "image/png",
+              "application/json"
+            ]
+          },
+          "base64": {
+            "type": "string",
+            "format": "byte",
+            "maxLength": 13981016
+          }
+        },
+        "required": [
+          "agentId",
+          "instanceId",
+          "fence",
+          "caseId",
+          "artifactId",
+          "sha256",
+          "mimeType",
+          "base64"
+        ]
+      },
+      "ResourceBytes": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resourceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 512,
+            "pattern": "^(?!.*\\.\\.)(?:[A-Za-z0-9_-][A-Za-z0-9_.-]{0,63}/)*[A-Za-z0-9_-][A-Za-z0-9_.-]{0,127}\\.(png|json|woff|woff2|ttf|otf)$",
+            "description": "Safe ASCII slash-separated path relative to isolated document root; reject absolute/UNC/backslash/traversal/symlink/case-fold collisions."
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10485760
+          },
+          "mimeType": {
+            "type": "string",
+            "enum": [
+              "image/png",
+              "application/json",
+              "font/woff",
+              "font/woff2",
+              "font/ttf",
+              "font/otf"
+            ]
+          },
+          "base64": {
+            "type": "string",
+            "format": "byte",
+            "maxLength": 13981016
+          }
+        },
+        "required": [
+          "resourceId",
+          "name",
+          "sha256",
+          "size",
+          "mimeType",
+          "base64"
+        ]
+      },
+      "HistoricalEvidenceRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "reportingInstanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerInstanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "evidenceRequestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Delivery"
+            },
+            "minItems": 0,
+            "maxItems": 100
+          },
+          "caseResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CaseResult"
+            },
+            "minItems": 0,
+            "maxItems": 32
+          },
+          "cleanupState": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "unknown",
+              "failed"
+            ]
+          },
+          "artifact": {
+            "$ref": "#/components/schemas/HistoricalArtifact"
+          }
+        },
+        "required": [
+          "agentId",
+          "reportingInstanceId",
+          "ownerInstanceId",
+          "fence",
+          "evidenceRequestId",
+          "events",
+          "caseResults",
+          "cleanupState"
+        ]
+      },
+      "HistoricalArtifact": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "caseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_.-]{0,250}\\.(png|json)$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10485760
+          },
+          "mimeType": {
+            "type": "string",
+            "enum": [
+              "image/png",
+              "application/json"
+            ]
+          },
+          "base64": {
+            "type": "string",
+            "format": "byte",
+            "maxLength": 13981016
+          }
+        },
+        "required": [
+          "caseId",
+          "path",
+          "sha256",
+          "size",
+          "mimeType",
+          "base64"
+        ]
+      },
+      "HistoricalEvidenceResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "receiptId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "leaseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "recorded": {
+            "type": "boolean"
+          },
+          "executionPermission": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "resourceReleased": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "historical_quarantine"
+            ]
+          }
+        },
+        "required": [
+          "receiptId",
+          "leaseId",
+          "recorded",
+          "executionPermission",
+          "resourceReleased",
+          "disposition"
+        ]
+      },
+      "InstanceReleaseRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "receipts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "leaseId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "completionReceipt": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "acceptedThrough": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "leaseId",
+                "completionReceipt",
+                "acceptedThrough"
+              ]
+            },
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "Only outstanding/unacknowledged completion receipts. Server records receipt acknowledgements transactionally across pages/calls and independently verifies every owned lease terminal, evidence and cleanup. Not an all-history list."
+          },
+          "reportingInstanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerInstanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerStopped": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "description": "Same instance: every Engine child stopped and new claims disabled while supervisor awaits release ACK. Different reporter: additionally verified old owner OS process absent. Unknown ownership forbids release."
+          }
+        },
+        "required": [
+          "agentId",
+          "receipts",
+          "reportingInstanceId",
+          "ownerInstanceId",
+          "ownerStopped"
+        ]
+      },
+      "InstanceReleaseResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "released": {
+            "type": "boolean",
+            "description": "False acknowledges this bounded receipt batch but keeps the owner; true only when all owned leases are independently releasable."
+          },
+          "remainingReceipts": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "reportingInstanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerInstanceId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "agentId",
+          "released",
+          "remainingReceipts",
+          "reportingInstanceId",
+          "ownerInstanceId"
+        ]
+      },
+      "CapabilitySet": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "platforms": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "web",
+                "android",
+                "ios"
+              ]
+            },
+            "maxItems": 3,
+            "default": []
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "description": "Canonical public Engine action name for the pinned release; server and local capability allowlists intersect. Aliases are forbidden."
+            },
+            "maxItems": 100,
+            "default": []
+          }
+        },
+        "required": [
+          "platforms",
+          "actions"
+        ]
+      },
+      "ExecutionPolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resourceKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "description": "Must equal Lease.resourceKey; resolves only through registered local physical device/browser slot mapping."
+          },
+          "platform": {
+            "type": "string",
+            "enum": [
+              "web",
+              "android",
+              "ios"
+            ]
+          },
+          "allowedOrigins": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "description": "Exact normalized http(s) origin. Empty denies all web navigation."
+            },
+            "maxItems": 100,
+            "default": []
+          },
+          "nativeApps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "platform": {
+                  "type": "string",
+                  "enum": [
+                    "android",
+                    "ios"
+                  ]
+                },
+                "appId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "activities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "maxItems": 100,
+                  "default": []
+                }
+              },
+              "required": [
+                "platform",
+                "appId",
+                "activities"
+              ]
+            },
+            "maxItems": 100,
+            "default": []
+          },
+          "secretRefs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,127}$"
+            },
+            "maxItems": 100,
+            "default": []
+          },
+          "allowProduction": {
+            "type": "boolean",
+            "default": false,
+            "description": "Production execution requires BOTH this server policy and explicit local opt-in. Missing means deny."
+          }
+        },
+        "required": [
+          "resourceKey",
+          "platform",
+          "allowedOrigins",
+          "nativeApps",
+          "secretRefs",
+          "allowProduction"
+        ]
+      },
+      "SuitePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "stopOnFailure": {
+            "type": "boolean"
+          },
+          "publishedVersionId": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 128
+          },
+          "publishedSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "nullable": true
+          }
+        },
+        "required": [
+          "stopOnFailure",
+          "publishedVersionId",
+          "publishedSha256"
+        ]
+      },
+      "OperatorRecovery": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "confirmedAt",
+          "priorFence",
+          "newFence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "confirmedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "priorFence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "newFence": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 9007199254740991
+          }
+        }
+      }
+    }
+  },
+  "x-policy": "Agent execution scope is the intersection of server ExecutionPolicy, registered allowlists, local device/origin/app/secret configuration and pinned Engine capabilities. Empty lists grant nothing. Appium connection URLs and secret values are local configuration only."
+}

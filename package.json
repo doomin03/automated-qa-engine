@@ -1,6 +1,6 @@
 {
   "name": "automated-qa-engine",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.8",
   "private": true,
   "type": "module",
   "types": "./packages/core/index.d.ts",
@@ -12,6 +12,10 @@
     "./playwright": {
       "types": "./runners/playwright/adapter.d.ts",
       "import": "./runners/playwright/adapter.mjs"
+    },
+    "./appium": {
+      "types": "./runners/appium/adapter.d.ts",
+      "import": "./runners/appium/adapter.mjs"
     }
   },
   "description": "Declarative QA CLI, browser runner and AI-authored Blueprint contracts",
@@ -24,13 +28,14 @@
     "doctor": "node packages/cli/aqa.mjs doctor",
     "check:foundation": "node scripts/check-foundation.mjs",
     "spec:validate": "openspec validate --all --strict --no-interactive",
-    "verify": "npm run check:foundation && npm run spec:validate && node scripts/build-contract.mjs --check && node scripts/build-types.mjs --check && npm test",
+    "verify": "npm run check:foundation && npm run check:architecture && npm run spec:validate && node scripts/build-contract.mjs --check && node scripts/build-types.mjs --check && npm test",
     "aqa": "node packages/cli/aqa.mjs",
     "demo": "node packages/cli/aqa.mjs demo",
     "test": "node --test --test-concurrency=1 tests/*.test.mjs",
     "contracts:bundle": "node scripts/build-contract.mjs",
     "types:build": "node scripts/build-types.mjs",
-    "test:package": "node scripts/test-package.mjs"
+    "test:package": "node scripts/test-package.mjs",
+    "check:architecture": "node scripts/check-architecture.mjs"
   },
   "devDependencies": {
     "@fission-ai/openspec": "1.14.2",
@@ -40,6 +45,7 @@
     "ajv": "8.20.0",
     "fast-xml-parser": "5.11.2",
     "playwright": "1.64.1",
+    "pngjs": "7.0.0",
     "yaml": "2.9.1"
   },
   "bin": {
@@ -54,6 +60,11 @@
     "README.md",
     "docs/package-api.md",
     "docs/xml-format.md",
-    "docs/ai-authoring.md"
+    "docs/ai-authoring.md",
+    "docs/appium.md",
+    "docs/design-checks.md",
+    "docs/authoring.md",
+    "packages/agent",
+    "docs/agent.md"
   ]
 }

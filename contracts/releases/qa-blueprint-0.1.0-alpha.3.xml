@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint schemaVersion="qa.blueprint/v1" id="demo-login" name="로컬 로그인 QA">
+  <flow id="login-flow" entryNode="start">
+    <variables><![CDATA[{"username":{"from":"literal","value":"qa-user"}}]]></variables>
+    <nodes>
+      <node id="start" type="start"></node>
+      <node id="open" type="action" action="launch"><params><![CDATA[{"target":"login"}]]></params></node>
+      <node id="name" type="action" action="input"><params><![CDATA[{"selector":"username","valueRef":"username"}]]></params></node>
+      <node id="submit" type="action" action="tap"><params><![CDATA[{"selector":"submit"}]]></params></node>
+      <node id="home" type="assertion" action="assertText" timeoutMs="3000"><params><![CDATA[{"selector":"greeting","expected":"Welcome qa-user"}]]></params></node>
+      <node id="capture" type="action" action="screenshot"><params><![CDATA[{}]]></params></node>
+      <node id="end" type="end"></node>
+    </nodes>
+    <edges>
+      <edge from="start" to="open"/>
+      <edge from="open" to="name"/>
+      <edge from="name" to="submit"/>
+      <edge from="submit" to="home"/>
+      <edge from="home" to="capture"/>
+      <edge from="capture" to="end"/>
+    </edges>
+  </flow>
+  <selectors><![CDATA[{"schemaVersion":"qa.selectors/v1","id":"demo-selectors","selectors":{"username":{"web":{"strategy":"testId","value":"username"}},"submit":{"web":{"strategy":"testId","value":"submit"}},"greeting":{"web":{"strategy":"testId","value":"greeting"}}}}]]></selectors>
+  <target><![CDATA[{"schemaVersion":"qa.target/v1","id":"local-web","platform":"web","launchTargets":{"login":"http://127.0.0.1:4317"},"allowedOrigins":["http://127.0.0.1:4317"],"environment":"local"}]]></target>
+</blueprint>

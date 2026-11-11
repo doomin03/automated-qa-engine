@@ -1,19 +1,13 @@
-import { readFile,writeFile,mkdir } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
-import { schema } from '../packages/core/schema.mjs';
-import { blueprintXml } from '../packages/core/xml.mjs';
-import { parseSource } from '../packages/core/documents.mjs';
-import { compileBlueprint, ENGINE_VERSION } from '../packages/core/compiler.mjs';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {schema} from '../packages/core/schema.mjs';
+import {ENGINE_VERSION} from '../packages/core/domain/version.mjs';
+import {listPresets} from '../packages/core/presets.mjs';
+import {renderContract} from './generation/contract.mjs';
 const manifest=JSON.parse(await readFile(new URL('../contracts/manifest.json',import.meta.url),'utf8'));
 const example=JSON.parse(await readFile(new URL('../examples/login.qa.json',import.meta.url),'utf8'));
 const pkg=JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
 if(pkg.version!==manifest.engineVersion || ENGINE_VERSION!==manifest.engineVersion) throw new Error('Runtime version drift');
-const artifact='qa-contract-'+manifest.engineVersion+'.json';
-const bundle=JSON.stringify({owner:manifest.owner,contractVersion:manifest.contractVersion,engineVersion:manifest.engineVersion,schemas:manifest.schemas,schema,example},null,2)+'\n';
-const metadata={status:'local-preview',artifact,engineVersion:manifest.engineVersion,contractVersion:manifest.contractVersion,sha256:createHash('sha256').update(bundle).digest('hex')};
-const xml=blueprintXml(example), xmlArtifact='qa-blueprint-'+manifest.engineVersion+'.xml';
-if(compileBlueprint(parseSource(xml,'xml')).blueprintSnapshotHash!==compileBlueprint(example).blueprintSnapshotHash) throw new Error('XML fixture semantic drift');
-const xmlMetadata={status:'local-preview',artifact:xmlArtifact,engineVersion:manifest.engineVersion,contractVersion:manifest.contractVersion,schemaVersion:'qa.blueprint/v1',sha256:createHash('sha256').update(xml).digest('hex'),blueprintSnapshotHash:compileBlueprint(example).blueprintSnapshotHash};
+const {artifact,bundle,metadata,xml,xmlArtifact,xmlMetadata}=renderContract({manifest,schema,example,presets:listPresets()});
 const dir=new URL('../contracts/releases/',import.meta.url);
 await mkdir(dir,{recursive:true});
 if(process.argv.includes('--check')) {

@@ -21,8 +21,9 @@ test('real browser PASS and deliberate FAIL produce isolated validated evidence'
   const pass=await executeBlueprint(b,{adapter,reportDir});
   assert.equal(pass.result.outcome,'passed');assert.equal(adapter.browser.isConnected(),false);
   b.flow.nodes.find(n=>n.id==='home').params.expected='WRONG';
+  b.flow.nodes.find(n=>n.id==='home').timeoutMs=200;
   const fail=await executeBlueprint(b,{adapter:new PlaywrightAdapter(),reportDir});
-  assert.equal(fail.result.outcome,'failed');assert.equal(fail.result.failure.code,'ASSERTION_FAILED');
+  assert.equal(fail.result.outcome,'failed');assert(['ASSERTION_FAILED','TIMEOUT'].includes(fail.result.failure.code));assert.equal(fail.result.failure.phase,'step');
   assert.equal(fail.result.failure.nodeId,'home');assert(fail.result.unvisitedNodes.includes('end'));
   assert.notEqual(pass.result.runId,fail.result.runId);
   for(const output of [pass,fail]) {

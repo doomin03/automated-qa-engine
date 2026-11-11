@@ -1,12 +1,16 @@
 # Blueprint XML 공개 교환 규격
 
-상태: 2026-10-29 **alpha.2 local-preview**. export 명령·엄격 parsing·속성 whitespace 보존은 사용자 Blueprint 왕복, 악성 XML 거부, 기존 파일 보존 테스트를 통과했다. 공개 bundle/XML fixture는 생성·의미 동등성·drift 검사를 통과했다. 원격 npm 게시를 뜻하지 않는다.
+현재 상태: **alpha.5 / contract 0.3.0-draft.1 local-preview**. 아래 Blueprint XML 투영은 alpha.2에서 도입한 호환 구조를 유지한다. export 명령·엄격 parsing·속성 whitespace 보존은 사용자 Blueprint 왕복, 악성 XML 거부, 기존 파일 보존 테스트를 통과했다. 원격 npm 게시를 뜻하지 않는다.
 
-`contracts/release.json`은 alpha.2 공개 bundle metadata이며 `contracts/xml-release.json`은 XML fixture의 byte hash와 Blueprint snapshot hash를 기록한다. alpha.1 artifact는 보존한다. runtime/tgz 설치 검증은 별도 패키지 인수 기록을 따른다.
+2026-10-31 alpha.3은 동일 XML 형식/schema v1을 유지한다. `contracts/release.json`은 현재 runtime 공개 bundle metadata이며 `contracts/xml-release.json`은 해당 XML fixture의 byte hash와 Blueprint snapshot hash를 기록한다. alpha.1/alpha.2 artifact는 보존한다. runtime/tgz 설치 검증은 버전별 패키지 인수 기록을 따른다.
 
 Engine 소유 `qa.blueprint/v1` JSON Schema의 XML 투영이다. 별도의 실행 언어가 아니며 웹 블록 편집기 또는 사용자가 작성한 XML을 같은 검증·plan·adapter 경로로 처리한다. 웹은 사용자용 공용 시나리오 배포와 진행 확인, Flutter Desktop은 개별 테스트 개발과 실제 실행을 담당한다.
 
 ## 구조
+
+alpha.5는 captureText/captureValue와 from:capture/public:true 변수, screenshot.required 및 step.skipped를 추가한다. 반복 작성 입력은 별도의 qa.authoring/v1이며 [authoring 규격](authoring.md)의 expand 단계로 표준 Blueprint XML을 만든다. Blueprint graph 자체에 cycle을 허용하지 않는다. 이전 버전 소비자는 새 action/schema를 지원한다고 가정하면 안 된다.
+
+alpha.4 / contract 0.2.0-draft.1은 기존 구조에 선택적 `<references>` JSON CDATA, target.profile, native selector 및 신규 action을 추가한다. assertValue는 expected 또는 expectedRef 중 정확히 하나를 받는다. 기존 XML은 그대로 실행 가능하며 모바일/비교 capability는 실제 대상 adapter가 검사한다. [디자인·UX 규격](design-checks.md)과 [Appium 실행 설정](appium.md)을 참고한다. source XML에 Appium endpoint/udid를 저장하지 않는다.
 
 | 요소 | 속성 | 자식/내용 |
 | --- | --- | --- |

@@ -30,6 +30,7 @@ try {
   const blueprint=JSON.parse(template.stdout);
   blueprint.id='external-consumer-test';blueprint.target.launchTargets.login=origin;blueprint.target.allowedOrigins=[origin];
   blueprint.flow.variables.username.value='package-user';blueprint.flow.nodes.find(n=>n.id==='home').params.expected='Welcome package-user';
+  blueprint.flow.nodes.find(n=>n.id==='home').timeoutMs=500;
   for(const outcome of ['passed','failed','cancelled']) {
     const b=structuredClone(blueprint),controller=new AbortController(),events=[];
     if(outcome==='failed')b.flow.nodes.find(n=>n.id==='home').params.expected='WRONG';
@@ -57,6 +58,44 @@ try {
     const reportDir=resolve('reports',terminal.runId);await verifyResult(reportDir,failed?'failed':'passed');
     runs.push({transport:'installed-cli-xml',outcome:terminal.outcome,exitCode:run.code,reportDir});
   }
+  {
+    const b=structuredClone(blueprint);b.flow.nodes.find(n=>n.id==='home').params.expected='WRONG';
+    const adapter=new PlaywrightAdapter();
+    const out=await executeBlueprint(b,{adapter,reportDir:'reports',onEvent:event=>{
+      if(event.type==='step.finished'&&event.outcome==='failed')throw new Error('private-installed-observer-secret');
+    }});
+    assert.equal(out.result.outcome,'failed');assert(['ASSERTION_FAILED','TIMEOUT'].includes(out.result.failure.code));assert.equal(out.result.failure.phase,'step');assert.equal(out.result.failure.nodeId,'home');
+    assert.equal(out.result.cleanupErrors[0].code,'ENGINE_ERROR');assert.equal(adapter.browser.isConnected(),false);
+    await verifyResult(out.reportDir,'failed');
+    for(const name of ['result.json','events.jsonl','evidence.json'])assert(!(await readFile(join(out.reportDir,name),'utf8')).includes('private-installed-observer-secret'));
+    runs.push({transport:'api-failure-observer',outcome:'failed',reportDir:out.reportDir});
+  }
+  {
+    const b=structuredClone(blueprint);b.selectors.selectors.username.web.value='missing';b.flow.nodes.find(n=>n.id==='name').timeoutMs=15000;
+    await writeFile('cancel.json',JSON.stringify(b));
+    const result=await new Promise((done,reject)=>{
+      const p=spawn(process.execPath,[cli,'run','cancel.json','--json','--control-stdin','--diagnostics','stderr','--report','reports'],{windowsHide:true});
+      const timer=setTimeout(()=>{p.kill();reject(new Error('Installed control CLI did not exit'));},30000);
+      let pending='',stderr='',sent=false;const events=[];
+      p.stdin.on('error',()=>{});
+      p.stdout.on('data',chunk=>{
+        pending+=chunk;
+        while(pending.includes('\n')) {
+          const end=pending.indexOf('\n'),line=pending.slice(0,end);pending=pending.slice(end+1);
+          const event=JSON.parse(line);events.push(event);
+          if(event.type==='step.started'&&event.nodeId==='name'&&!sent){sent=true;p.stdin.write('{"type":"cancel"}\n');}
+        }
+      });
+      p.stderr.on('data',chunk=>stderr+=chunk);
+      p.on('error',error=>{clearTimeout(timer);reject(error);});
+      p.on('close',code=>{clearTimeout(timer);done({code,stderr,events});});
+    });
+    assert.equal(result.code,5);assert.equal(result.stderr,'');
+    result.events.forEach((e,i)=>{validateSchema(e);assert.equal(e.sequence,i+1);});
+    const terminal=result.events.at(-1);assert.equal(terminal.type,'run.finished');assert.equal(terminal.outcome,'cancelled');
+    const reportDir=resolve('reports',terminal.runId);await verifyResult(reportDir,'cancelled');
+    runs.push({transport:'installed-cli-control',outcome:'cancelled',exitCode:result.code,reportDir});
+  }
   const report={engineVersion:ENGINE_VERSION,packageImport:import.meta.resolve('automated-qa-engine'),installedBin:cli,runs};
   await writeFile('consumer-report.json',JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report));
@@ -66,6 +105,7 @@ async function verifyResult(dir,outcome) {
   const result=validateSchema(JSON.parse(await readFile(join(dir,'result.json'),'utf8')));
   const evidence=validateSchema(JSON.parse(await readFile(join(dir,'evidence.json'),'utf8')));
   assert.equal(result.outcome,outcome);assert.equal(result.executed.engineVersion,ENGINE_VERSION);
+  if(outcome==='failed'){assert(['ASSERTION_FAILED','TIMEOUT'].includes(result.failure.code));assert.equal(result.failure.phase,'step');assert.equal(result.failure.nodeId,'home');}
   if(outcome!=='cancelled') assert(result.artifacts.length>0);
   const events=(await readFile(join(dir,'events.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);
   events.forEach((e,i)=>{validateSchema(e);assert.equal(e.sequence,i+1);});

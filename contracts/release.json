@@ -1,7 +1,7 @@
 {
   "status": "local-preview",
-  "artifact": "qa-contract-0.1.0-alpha.2.json",
-  "engineVersion": "0.1.0-alpha.2",
-  "contractVersion": "0.1.0-draft.1",
-  "sha256": "3d5be41a5b996dfada78b3aea5f8e17fa889e1c90a0e00c566eb00c717c00715"
+  "artifact": "qa-contract-0.1.0-alpha.8.json",
+  "engineVersion": "0.1.0-alpha.8",
+  "contractVersion": "0.3.0-draft.2",
+  "sha256": "638d48f182d12819ebd167d42457c7dceaa90928abb38c32a4867e3c94b10763"
 }
