@@ -1,5 +1,7 @@
 # 제품 기획과 단계별 인수 기준
 
+2026-11-12 정합. 이 표는 초기 P0 계획을 보존하면서 현재 Engine 코드와 실제 인수 근거를 연결한다. Checker 전체 제품 완료 상태는 해당 저장소의 OpenSpec/검증 기록이 정본이며 Engine 결과만으로 대신 판정하지 않는다.
+
 ## 목적과 사용자
 
 QA 담당자가 공통 TestCase/Suite를 내려받아 Flow를 편집하고, 동일 정의를 Desktop·CLI·Agent에서 실행해 증거와 주간 회귀를 공유한다.
@@ -20,26 +22,25 @@ qa_editor는 정의를 작성하고 qa_tester는 허용된 환경에서 실행�
 
 | 단계 | 범위 | 인수 증거 | 현재 상태 |
 | --- | --- | --- | --- |
-| P0 | 조사, 기획, 경계, 계약 초안, OpenSpec, 설정 | 저장소별 foundation 검사 + strict spec 검증 + lockfile 설치 | 이번 작업 |
-| P1 engine | schema/graph/selector/secretRef, interpreter, CLI, Playwright | 실제 로컬 웹 PASS와 의도적 FAIL; screenshot/result/exit code; timeout/cancel/crash cleanup | 미구현 |
-| P2 checker | Flutter TC/Flow CRUD, drag/drop, undo/redo, CLI 연결, 결과 표시 | UI → engine validate → 실제 웹 run → 결과; round-trip 계약 | 미구현, P1 release 필요 |
-| P3 checker | Slack OIDC/RBAC, 관리자, immutable registry, 승인/다운로드/diff | 게시 → 버전 고정 다운로드; 다른 프로젝트 접근 거부 테스트 | 미구현 |
-| P4 양쪽 | Agent, scheduler, device lease, 결과 수집/회귀/알림 | 중복 occurrence 한 번 실행, offline/missed 구분, replay 중복 제거 | 미구현 |
-| P5 engine | Appium Android/iOS, 플랫폼별 TV | 기기/OS/driver/로그 증거; 미지원은 unsupported | 미구현 |
-| P6 | 화이트박스, AI 보조, recorder/export | allowlist/sandbox, 사람 검토, 실제 실행 증거 | 미구현 |
+| P0 | 조사, 기획, 경계, 계약 초안, OpenSpec, 설정 | [초기 검증](../validation.md), 현행 foundation/strict | 완료 이력; 기준 spec sync/archive 행정은 별도 잔여 |
+| P1 engine | schema/graph/selector/secretRef, interpreter, CLI, Playwright | [alpha.8 독립 패키지](../validation-alpha.8.md), [alpha.9 작성 인수](../validation-alpha.9.md) | 실제 구현·인수 완료. [alpha.10](../validation-alpha.10.md)은 취소 전달 보완 인수 중 |
+| P2 checker | Flutter TC/Flow 편집, CLI 연결, 결과 표시 | Engine alpha.8 설치 소비 및 alpha.9 Dart compose 교차 인수 | 미구현 단계가 아님. D08 다중 터미널/native final·앱 Release 및 전체 UI 인수는 Checker가 별도 관리 |
+| P3 checker | OIDC/RBAC, immutable registry, 승인/다운로드/diff | Registry→Flutter→결과 서버 연계 이력은 [alpha.6](../validation-alpha.6.md) 참조 | 서버 협업 코드와 로컬 인수 존재. 실제 Slack/운영 계정·권한/배포 전체 인수는 Checker 최신 기록 확인 |
+| P4 양쪽 | Agent, scheduler, device lease, 결과 수집/회귀/알림 | alpha.6 실제 Nest 예약·중복/재연결/수동복구·artifact 인수 | optional Agent 구현·교차 인수 완료. 최신 Engine로 서버/Agent/Desktop pin 통합 및 운영 인수는 별도, 회귀 비교·알림 완료를 Engine가 대신 주장하지 않음 |
+| P5 engine | Appium Android/iOS, 플랫폼별 TV | [Appium 지원 범위](../appium.md) 및 protocol 회귀 | Appium protocol 구현·검증, Android/iOS 실제 장치 task3.2 미완료. TV adapter 미구현 |
+| P6 | 화이트박스, AI 보조, recorder/export | [작성 계약](../document-authoring.md), [XML](../xml-format.md) | AI가 편집할 수 있는 DSL·템플릿/합성·export는 구현. CodeTestAdapter/sandbox 및 동작 recording은 미구현 후속 |
 
-P0를 끝냈다고 P1 제품이 실행된다는 뜻은 아니다. 실제 실행 기능이 없는데 성공 결과를 반환하는 placeholder를 만들지 않는다.
+원본 PHASES_AND_ACCEPTANCE는 Whitebox를 Stage5, AI/Recorder를 Stage6으로 구분한다. 위 표의 초기 P6 묶음이 이 구분을 바꾸지 않는다. 실제 실행 기능이 없는데 성공 결과를 반환하는 placeholder를 만들지 않는다. 실기기 부재, 제품 구현 미완료, sync/archive 행정 및 운영 승격을 [잔여 범위](../architecture/remaining-engine-gaps-20261112.md)처럼 분리한다.
 
 ## 우선순위와 제외 범위
 
-첫 제품 마일스톤은 서버/GUI 없는 CLI의 실제 브라우저 수직 슬라이스다. 다음은 같은 Flow의 Flutter 편집·실행·증거 확인이다.
-서버 승인/주간 예약/모바일/TV는 이 마일스톤을 건너뛰어 대규모 scaffolding하지 않는다. 코드 생성은 선택 export이며 기본 실행은 interpreter다.
+첫 CLI/브라우저 수직 슬라이스 이후 Flutter 소비와 서버/Agent 교차 인수까지 진행했다. 현재는 검증된 새 runtime을 전달하고 서버/Agent/Desktop의 exact pin을 맞춘 뒤 실제 통합 및 다른 PC 환경을 인수하는 순서다. 모바일 실기기·TV·whitebox·recorder는 각각 필요한 환경과 별도 명세를 갖춘 후 진행한다. 코드 생성은 선택 export이며 기본 실행은 interpreter다.
 
 ## 공통 인수 기준
 
 - 실패는 assertion_failed / environment·driver infra_error / unsupported / cancelled로 구분한다.
 - 테스트 outcome과 업무 progress, schedule occurrence, unrun을 각각 관리한다.
 - immutable snapshot, artifact hash, engine/schema version으로 재현성을 기록한다.
-- secret은 참조만 저장하며 CLI stdout은 JSON/JSONL, 진단은 stderr로 분리한다.
-- 해당 단계의 format/lint/typecheck/unit/contract/build/E2E를 실제 구현 후 CI에 추가한다. 현재 검사는 제품 테스트를 대체하지 않는다.
+- secret은 참조만 저장한다. CLI stdout은 JSON/JSONL이며 기본 오류 transport는 호환을 위해 stdout, `--diagnostics stderr` 선택 시 stderr로 분리한다.
+- 해당 단계의 typecheck/unit/contract/build/E2E를 실제 증거로 확인한다. 로컬 검증 통과와 원격 CI/운영 배포 성공은 구분한다.
 

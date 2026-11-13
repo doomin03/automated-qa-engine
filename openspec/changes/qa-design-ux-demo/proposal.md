@@ -29,7 +29,7 @@
 ## Impact
 
 - integrationId: qa-design-ux-demo
-- contractVersion: pending (기존 배포 계약 0.1.0-draft.1은 변경하지 않음)
+- contractVersion: 0.2.0-draft.1 구현 목표 (runtime 0.1.0-alpha.4, 기존 배포 계약과 alpha.2/alpha.3 artifact는 불변)
 - dependsOn: qa-user-web-desktop-handoff / qa-flow-schema-core / qa-playwright-runner
 - counterpartRepoChange: automated-qa-checker/openspec/changes/qa-design-ux-demo
 - acceptanceCriteria: 외부 tgz consumer와 실제 Chromium에서 이미지·수치 PASS/의도적 FAIL, profile/크기 불일치 blocked, overlay/focus/history fixture, timeout/cancel·증거 hash·XML 왕복을 검증한다. 현재 신규 tasks는 모두 미완료다.

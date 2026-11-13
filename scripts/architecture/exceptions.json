@@ -1,0 +1,24 @@
+[
+  {
+    "file": "packages/agent/protocol.mjs",
+    "kind": "resource",
+    "expression": "'../../contracts/agent-protocol/' + protocolPin.artifact",
+    "line": 6,
+    "column": 28,
+    "targets": [
+      "contracts/agent-protocol/0.1.0-draft.1/openapi.json"
+    ],
+    "reason": "Exact pinned manifest resource verified by runtime hash before consumption."
+  },
+  {
+    "file": "packages/agent/service/release-pin.mjs",
+    "kind": "resource",
+    "expression": "'../../../contracts/releases/' + release.artifact",
+    "line": 7,
+    "column": 34,
+    "targets": [
+      "contracts/releases/qa-contract-0.1.0-alpha.8.json"
+    ],
+    "reason": "Exact pinned manifest resource verified by runtime hash before consumption."
+  }
+]

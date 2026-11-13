@@ -1,0 +1,94 @@
+{
+  "at": "2026-11-12T03:39:42.043Z",
+  "checkerHead": "3e73cd1f14b0aab658748e9c9b5c1be4a87794ad",
+  "engineHead": "8dd206a24657324c5675f4bb092d69c6ba366e7f",
+  "scope": "Pure original Dart compiler execution and Engine compile/XML roundtrip; no adapter, browser, Flutter test or model call",
+  "results": [
+    {
+      "id": "public-example-twice",
+      "accepted": true,
+      "nodeCount": 12,
+      "blueprintSnapshotHash": "sha256:e5ead6090dc5cf8c37a74a9ba35b2215dacba635623c67b0f9663671f8edcdaa",
+      "xmlRoundTrip": true,
+      "sourceHashChecked": true
+    },
+    {
+      "id": "capture-branch-twice",
+      "accepted": true,
+      "nodeCount": 12,
+      "blueprintSnapshotHash": "sha256:0c25224326bd60e3eec3eec82ddcd39de81b5b2f042c919032c52827a6dd7699",
+      "xmlRoundTrip": true,
+      "sourceHashChecked": true
+    },
+    {
+      "id": "mixed-three",
+      "accepted": true,
+      "nodeCount": 17,
+      "blueprintSnapshotHash": "sha256:5bca2fe932b016687742eb7670e066b4b071f3ec9013227dc6f9f9fb714b0569",
+      "xmlRoundTrip": true,
+      "sourceHashChecked": true
+    },
+    {
+      "id": "secret-reference-twice",
+      "accepted": true,
+      "nodeCount": 12,
+      "blueprintSnapshotHash": "sha256:312f19781f3a6a7422f5120a6795d55accfbad9cdfb710ad97882d87fa3bd726",
+      "xmlRoundTrip": true,
+      "sourceHashChecked": true
+    },
+    {
+      "id": "reject-disconnected",
+      "accepted": false
+    },
+    {
+      "id": "reject-cycle",
+      "accepted": false
+    },
+    {
+      "id": "reject-target-mismatch",
+      "accepted": false
+    }
+  ],
+  "sources": [
+    {
+      "path": "automated-qa-checker/apps/app/lib/features/xml_blocks/services/xml_block_compiler.dart",
+      "sha256": "6f355ec56767c17b68ae9e0c68abd3e6c3d92c0f7ef3911890c5c3d810de2d38"
+    },
+    {
+      "path": "automated-qa-checker/apps/app/lib/features/xml_blocks/models/xml_block_document.dart",
+      "sha256": "dd973c39077dc38e003f71469b48f58f0c3e0e41797c01b067d07c26c69542ce"
+    },
+    {
+      "path": "automated-qa-checker/apps/app/assets/desktop-engine-contract.json",
+      "sha256": "638d48f182d12819ebd167d42457c7dceaa90928abb38c32a4867e3c94b10763"
+    },
+    {
+      "path": "automated-qa-engine/packages/core/compiler.mjs",
+      "sha256": "a2a1f3dc9a09d7c22c8bc5e31c9e44fde5f0741294b578a18578c5201d642fd8"
+    },
+    {
+      "path": "automated-qa-engine/packages/core/xml.mjs",
+      "sha256": "bf39ccd6ca7d239a41a4634641e1c4dc6b719a26a27e272afae64c7ab1af6057"
+    },
+    {
+      "path": "automated-qa-engine/packages/core/codecs/source.mjs",
+      "sha256": "ede8556fd94f0ce3d01e8e71e3df4f5bd0fe37e57380df94099fb7587dea3410"
+    },
+    {
+      "path": "compose-fixtures.json",
+      "sha256": "7303f33e9cec0c609612a539b7cb33a349431165f1b35bbdb7415f3e51386c22"
+    },
+    {
+      "path": "dart-compose-baseline.json",
+      "sha256": "ad48a9ca0b9bca28d1d6e9a2d850f42d99f3608517281dfdb2d9b69d4e8420a4"
+    },
+    {
+      "path": "dart-compose-baseline.dart",
+      "sha256": "94ace9cde65700a01a5aa2546f93454b1eaa3fbbb7b685a51c8fcd35c0e95c94"
+    },
+    {
+      "path": "make-compose-fixtures.mjs",
+      "sha256": "e6a72e407aae61ab58e8e86788ed83e69064bfcf89a11ced48871869ea1b4e0d"
+    }
+  ]
+}

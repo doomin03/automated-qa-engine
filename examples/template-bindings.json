@@ -1,0 +1,42 @@
+{
+  "id": "input-example",
+  "target": {
+    "schemaVersion": "qa.target/v1",
+    "id": "local-web",
+    "platform": "web",
+    "launchTargets": {
+      "login": "http://127.0.0.1:4317"
+    },
+    "allowedOrigins": [
+      "http://127.0.0.1:4317"
+    ],
+    "environment": "local"
+  },
+  "selectors": {
+    "schemaVersion": "qa.selectors/v1",
+    "id": "demo-selectors",
+    "selectors": {
+      "username": {
+        "web": {
+          "strategy": "testId",
+          "value": "username"
+        }
+      },
+      "submit": {
+        "web": {
+          "strategy": "testId",
+          "value": "submit"
+        }
+      },
+      "greeting": {
+        "web": {
+          "strategy": "testId",
+          "value": "greeting"
+        }
+      }
+    }
+  },
+  "launch": "login",
+  "selector": "username",
+  "value": "qa-user"
+}

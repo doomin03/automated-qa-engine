@@ -1,5 +1,7 @@
 # Engine ↔ Checker 실행 계약
 
+이 문서는 alpha.2 시점의 역사 계약 초안이다. 아래 P4 예정·현재 버전 표기는 그 시점을 설명하며 최신 실행 기능의 상태로 사용하지 않는다. 현행 정본은 [공개 API](../package-api.md), [Agent 계약](../agent.md), contracts/release.json 및 [alpha.10 검증](../validation-alpha.10.md)이다. schema bytes와 운영 pin의 버전은 별도로 확인한다.
+
 상태: contract 0.1.0-draft.1 / engine 0.1.0-alpha.2 local-preview. [JSON Schema](../../contracts/schemas/qa.schema.json)와 [manifest](../../contracts/manifest.json)가 현재 입력/출력 구조의 기준이다. 이 문서의 중앙 Agent/idempotency 정책은 P4 목표이며 로컬 CLI 구현 완료를 뜻하지 않는다.
 
 ## 버전과 배포

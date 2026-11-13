@@ -1,0 +1,1440 @@
+{
+  "generatedAt": "2026-11-12T03:38:24.483Z",
+  "source": "Current Engine public XML serializer/parser and validation, original Checker Dart compiler used separately; no execution",
+  "fixtures": [
+    {
+      "id": "public-example-twice",
+      "assets": [
+        {
+          "id": "public-example",
+          "name": "public-example.xml",
+          "path": "fixtures/public-example.xml",
+          "format": "xml",
+          "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<blueprint schemaVersion=\"qa.blueprint/v1\" id=\"demo-login\" name=\"로컬 로그인 QA\">\n  <flow id=\"login-flow\" entryNode=\"start\">\n    <variables><![CDATA[{\"username\":{\"from\":\"literal\",\"value\":\"qa-user\"}}]]></variables>\n    <nodes>\n      <node id=\"start\" type=\"start\"></node>\n      <node id=\"open\" type=\"action\" action=\"launch\"><params><![CDATA[{\"target\":\"login\"}]]></params></node>\n      <node id=\"name\" type=\"action\" action=\"input\"><params><![CDATA[{\"selector\":\"username\",\"valueRef\":\"username\"}]]></params></node>\n      <node id=\"submit\" type=\"action\" action=\"tap\"><params><![CDATA[{\"selector\":\"submit\"}]]></params></node>\n      <node id=\"home\" type=\"assertion\" action=\"assertText\" timeoutMs=\"3000\"><params><![CDATA[{\"selector\":\"greeting\",\"expected\":\"Welcome qa-user\"}]]></params></node>\n      <node id=\"capture\" type=\"action\" action=\"screenshot\"><params><![CDATA[{}]]></params></node>\n      <node id=\"end\" type=\"end\"></node>\n    </nodes>\n    <edges>\n      <edge from=\"start\" to=\"open\"/>\n      <edge from=\"open\" to=\"name\"/>\n      <edge from=\"name\" to=\"submit\"/>\n      <edge from=\"submit\" to=\"home\"/>\n      <edge from=\"home\" to=\"capture\"/>\n      <edge from=\"capture\" to=\"end\"/>\n    </edges>\n  </flow>\n  <selectors><![CDATA[{\"schemaVersion\":\"qa.selectors/v1\",\"id\":\"demo-selectors\",\"selectors\":{\"username\":{\"web\":{\"strategy\":\"testId\",\"value\":\"username\"}},\"submit\":{\"web\":{\"strategy\":\"testId\",\"value\":\"submit\"}},\"greeting\":{\"web\":{\"strategy\":\"testId\",\"value\":\"greeting\"}}}}]]></selectors>\n  <target><![CDATA[{\"schemaVersion\":\"qa.target/v1\",\"id\":\"local-web\",\"platform\":\"web\",\"launchTargets\":{\"login\":\"http://127.0.0.1:4317\"},\"allowedOrigins\":[\"http://127.0.0.1:4317\"],\"environment\":\"local\"}]]></target>\n</blueprint>\n",
+          "sha256": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+          "blueprint": {
+            "schemaVersion": "qa.blueprint/v1",
+            "id": "demo-login",
+            "name": "로컬 로그인 QA",
+            "flow": {
+              "schemaVersion": "qa.flow/v1",
+              "id": "login-flow",
+              "entryNode": "start",
+              "nodes": [
+                {
+                  "id": "start",
+                  "type": "start"
+                },
+                {
+                  "id": "open",
+                  "type": "action",
+                  "action": "launch",
+                  "params": {
+                    "target": "login"
+                  }
+                },
+                {
+                  "id": "name",
+                  "type": "action",
+                  "action": "input",
+                  "params": {
+                    "selector": "username",
+                    "valueRef": "username"
+                  }
+                },
+                {
+                  "id": "submit",
+                  "type": "action",
+                  "action": "tap",
+                  "params": {
+                    "selector": "submit"
+                  }
+                },
+                {
+                  "id": "home",
+                  "type": "assertion",
+                  "action": "assertText",
+                  "timeoutMs": 3000,
+                  "params": {
+                    "selector": "greeting",
+                    "expected": "Welcome qa-user"
+                  }
+                },
+                {
+                  "id": "capture",
+                  "type": "action",
+                  "action": "screenshot",
+                  "params": {}
+                },
+                {
+                  "id": "end",
+                  "type": "end"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "start",
+                  "to": "open"
+                },
+                {
+                  "from": "open",
+                  "to": "name"
+                },
+                {
+                  "from": "name",
+                  "to": "submit"
+                },
+                {
+                  "from": "submit",
+                  "to": "home"
+                },
+                {
+                  "from": "home",
+                  "to": "capture"
+                },
+                {
+                  "from": "capture",
+                  "to": "end"
+                }
+              ],
+              "variables": {
+                "username": {
+                  "from": "literal",
+                  "value": "qa-user"
+                }
+              }
+            },
+            "selectors": {
+              "schemaVersion": "qa.selectors/v1",
+              "id": "demo-selectors",
+              "selectors": {
+                "username": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "username"
+                  }
+                },
+                "submit": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "submit"
+                  }
+                },
+                "greeting": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "greeting"
+                  }
+                }
+              }
+            },
+            "target": {
+              "schemaVersion": "qa.target/v1",
+              "id": "local-web",
+              "platform": "web",
+              "launchTargets": {
+                "login": "http://127.0.0.1:4317"
+              },
+              "allowedOrigins": [
+                "http://127.0.0.1:4317"
+              ],
+              "environment": "local"
+            }
+          }
+        }
+      ],
+      "instances": [
+        {
+          "id": "instance-1",
+          "assetId": "public-example"
+        },
+        {
+          "id": "instance-2",
+          "assetId": "public-example"
+        }
+      ],
+      "links": [
+        {
+          "from": "instance-1",
+          "to": "instance-2"
+        }
+      ]
+    },
+    {
+      "id": "capture-branch-twice",
+      "assets": [
+        {
+          "id": "capture-branch",
+          "name": "capture-branch.xml",
+          "path": "fixtures/capture-branch.xml",
+          "format": "xml",
+          "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<blueprint schemaVersion=\"qa.blueprint/v1\" id=\"capture-branch\" name=\"로컬 로그인 QA\">\n  <flow id=\"login-flow\" entryNode=\"start\">\n    <variables><![CDATA[{\"username\":{\"from\":\"literal\",\"value\":\"qa-user\"},\"captured\":{\"from\":\"capture\",\"public\":true}}]]></variables>\n    <nodes>\n      <node id=\"start\" type=\"start\"></node>\n      <node id=\"open\" type=\"action\" action=\"launch\"><params><![CDATA[{\"target\":\"login\"}]]></params></node>\n      <node id=\"input\" type=\"action\" action=\"input\"><params><![CDATA[{\"selector\":\"username\",\"valueRef\":\"username\"}]]></params></node>\n      <node id=\"capture\" type=\"action\" action=\"captureText\"><params><![CDATA[{\"selector\":\"greeting\",\"variable\":\"captured\"}]]></params></node>\n      <node id=\"choose\" type=\"branch\"><condition><![CDATA[{\"variable\":\"captured\",\"operator\":\"equals\",\"value\":\"Welcome qa-user\"}]]></condition></node>\n      <node id=\"check\" type=\"assertion\" action=\"assertValue\"><params><![CDATA[{\"selector\":\"username\",\"expectedRef\":\"captured\"}]]></params></node>\n      <node id=\"end\" type=\"end\"></node>\n    </nodes>\n    <edges>\n      <edge from=\"start\" to=\"open\"/>\n      <edge from=\"open\" to=\"input\"/>\n      <edge from=\"input\" to=\"capture\"/>\n      <edge from=\"capture\" to=\"choose\"/>\n      <edge from=\"choose\" to=\"end\" label=\"true\"/>\n      <edge from=\"choose\" to=\"check\" label=\"false\"/>\n      <edge from=\"check\" to=\"end\"/>\n    </edges>\n  </flow>\n  <selectors><![CDATA[{\"schemaVersion\":\"qa.selectors/v1\",\"id\":\"demo-selectors\",\"selectors\":{\"username\":{\"web\":{\"strategy\":\"testId\",\"value\":\"username\"}},\"submit\":{\"web\":{\"strategy\":\"testId\",\"value\":\"submit\"}},\"greeting\":{\"web\":{\"strategy\":\"testId\",\"value\":\"greeting\"}}}}]]></selectors>\n  <target><![CDATA[{\"schemaVersion\":\"qa.target/v1\",\"id\":\"local-web\",\"platform\":\"web\",\"launchTargets\":{\"login\":\"http://127.0.0.1:4317\"},\"allowedOrigins\":[\"http://127.0.0.1:4317\"],\"environment\":\"local\"}]]></target>\n</blueprint>\n",
+          "sha256": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678",
+          "blueprint": {
+            "schemaVersion": "qa.blueprint/v1",
+            "id": "capture-branch",
+            "name": "로컬 로그인 QA",
+            "flow": {
+              "schemaVersion": "qa.flow/v1",
+              "id": "login-flow",
+              "entryNode": "start",
+              "nodes": [
+                {
+                  "id": "start",
+                  "type": "start"
+                },
+                {
+                  "id": "open",
+                  "type": "action",
+                  "action": "launch",
+                  "params": {
+                    "target": "login"
+                  }
+                },
+                {
+                  "id": "input",
+                  "type": "action",
+                  "action": "input",
+                  "params": {
+                    "selector": "username",
+                    "valueRef": "username"
+                  }
+                },
+                {
+                  "id": "capture",
+                  "type": "action",
+                  "action": "captureText",
+                  "params": {
+                    "selector": "greeting",
+                    "variable": "captured"
+                  }
+                },
+                {
+                  "id": "choose",
+                  "type": "branch",
+                  "condition": {
+                    "variable": "captured",
+                    "operator": "equals",
+                    "value": "Welcome qa-user"
+                  }
+                },
+                {
+                  "id": "check",
+                  "type": "assertion",
+                  "action": "assertValue",
+                  "params": {
+                    "selector": "username",
+                    "expectedRef": "captured"
+                  }
+                },
+                {
+                  "id": "end",
+                  "type": "end"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "start",
+                  "to": "open"
+                },
+                {
+                  "from": "open",
+                  "to": "input"
+                },
+                {
+                  "from": "input",
+                  "to": "capture"
+                },
+                {
+                  "from": "capture",
+                  "to": "choose"
+                },
+                {
+                  "from": "choose",
+                  "to": "end",
+                  "label": "true"
+                },
+                {
+                  "from": "choose",
+                  "to": "check",
+                  "label": "false"
+                },
+                {
+                  "from": "check",
+                  "to": "end"
+                }
+              ],
+              "variables": {
+                "username": {
+                  "from": "literal",
+                  "value": "qa-user"
+                },
+                "captured": {
+                  "from": "capture",
+                  "public": true
+                }
+              }
+            },
+            "selectors": {
+              "schemaVersion": "qa.selectors/v1",
+              "id": "demo-selectors",
+              "selectors": {
+                "username": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "username"
+                  }
+                },
+                "submit": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "submit"
+                  }
+                },
+                "greeting": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "greeting"
+                  }
+                }
+              }
+            },
+            "target": {
+              "schemaVersion": "qa.target/v1",
+              "id": "local-web",
+              "platform": "web",
+              "launchTargets": {
+                "login": "http://127.0.0.1:4317"
+              },
+              "allowedOrigins": [
+                "http://127.0.0.1:4317"
+              ],
+              "environment": "local"
+            }
+          }
+        }
+      ],
+      "instances": [
+        {
+          "id": "instance-1",
+          "assetId": "capture-branch"
+        },
+        {
+          "id": "instance-2",
+          "assetId": "capture-branch"
+        }
+      ],
+      "links": [
+        {
+          "from": "instance-1",
+          "to": "instance-2"
+        }
+      ]
+    },
+    {
+      "id": "mixed-three",
+      "assets": [
+        {
+          "id": "public-example",
+          "name": "public-example.xml",
+          "path": "fixtures/public-example.xml",
+          "format": "xml",
+          "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<blueprint schemaVersion=\"qa.blueprint/v1\" id=\"demo-login\" name=\"로컬 로그인 QA\">\n  <flow id=\"login-flow\" entryNode=\"start\">\n    <variables><![CDATA[{\"username\":{\"from\":\"literal\",\"value\":\"qa-user\"}}]]></variables>\n    <nodes>\n      <node id=\"start\" type=\"start\"></node>\n      <node id=\"open\" type=\"action\" action=\"launch\"><params><![CDATA[{\"target\":\"login\"}]]></params></node>\n      <node id=\"name\" type=\"action\" action=\"input\"><params><![CDATA[{\"selector\":\"username\",\"valueRef\":\"username\"}]]></params></node>\n      <node id=\"submit\" type=\"action\" action=\"tap\"><params><![CDATA[{\"selector\":\"submit\"}]]></params></node>\n      <node id=\"home\" type=\"assertion\" action=\"assertText\" timeoutMs=\"3000\"><params><![CDATA[{\"selector\":\"greeting\",\"expected\":\"Welcome qa-user\"}]]></params></node>\n      <node id=\"capture\" type=\"action\" action=\"screenshot\"><params><![CDATA[{}]]></params></node>\n      <node id=\"end\" type=\"end\"></node>\n    </nodes>\n    <edges>\n      <edge from=\"start\" to=\"open\"/>\n      <edge from=\"open\" to=\"name\"/>\n      <edge from=\"name\" to=\"submit\"/>\n      <edge from=\"submit\" to=\"home\"/>\n      <edge from=\"home\" to=\"capture\"/>\n      <edge from=\"capture\" to=\"end\"/>\n    </edges>\n  </flow>\n  <selectors><![CDATA[{\"schemaVersion\":\"qa.selectors/v1\",\"id\":\"demo-selectors\",\"selectors\":{\"username\":{\"web\":{\"strategy\":\"testId\",\"value\":\"username\"}},\"submit\":{\"web\":{\"strategy\":\"testId\",\"value\":\"submit\"}},\"greeting\":{\"web\":{\"strategy\":\"testId\",\"value\":\"greeting\"}}}}]]></selectors>\n  <target><![CDATA[{\"schemaVersion\":\"qa.target/v1\",\"id\":\"local-web\",\"platform\":\"web\",\"launchTargets\":{\"login\":\"http://127.0.0.1:4317\"},\"allowedOrigins\":[\"http://127.0.0.1:4317\"],\"environment\":\"local\"}]]></target>\n</blueprint>\n",
+          "sha256": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+          "blueprint": {
+            "schemaVersion": "qa.blueprint/v1",
+            "id": "demo-login",
+            "name": "로컬 로그인 QA",
+            "flow": {
+              "schemaVersion": "qa.flow/v1",
+              "id": "login-flow",
+              "entryNode": "start",
+              "nodes": [
+                {
+                  "id": "start",
+                  "type": "start"
+                },
+                {
+                  "id": "open",
+                  "type": "action",
+                  "action": "launch",
+                  "params": {
+                    "target": "login"
+                  }
+                },
+                {
+                  "id": "name",
+                  "type": "action",
+                  "action": "input",
+                  "params": {
+                    "selector": "username",
+                    "valueRef": "username"
+                  }
+                },
+                {
+                  "id": "submit",
+                  "type": "action",
+                  "action": "tap",
+                  "params": {
+                    "selector": "submit"
+                  }
+                },
+                {
+                  "id": "home",
+                  "type": "assertion",
+                  "action": "assertText",
+                  "timeoutMs": 3000,
+                  "params": {
+                    "selector": "greeting",
+                    "expected": "Welcome qa-user"
+                  }
+                },
+                {
+                  "id": "capture",
+                  "type": "action",
+                  "action": "screenshot",
+                  "params": {}
+                },
+                {
+                  "id": "end",
+                  "type": "end"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "start",
+                  "to": "open"
+                },
+                {
+                  "from": "open",
+                  "to": "name"
+                },
+                {
+                  "from": "name",
+                  "to": "submit"
+                },
+                {
+                  "from": "submit",
+                  "to": "home"
+                },
+                {
+                  "from": "home",
+                  "to": "capture"
+                },
+                {
+                  "from": "capture",
+                  "to": "end"
+                }
+              ],
+              "variables": {
+                "username": {
+                  "from": "literal",
+                  "value": "qa-user"
+                }
+              }
+            },
+            "selectors": {
+              "schemaVersion": "qa.selectors/v1",
+              "id": "demo-selectors",
+              "selectors": {
+                "username": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "username"
+                  }
+                },
+                "submit": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "submit"
+                  }
+                },
+                "greeting": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "greeting"
+                  }
+                }
+              }
+            },
+            "target": {
+              "schemaVersion": "qa.target/v1",
+              "id": "local-web",
+              "platform": "web",
+              "launchTargets": {
+                "login": "http://127.0.0.1:4317"
+              },
+              "allowedOrigins": [
+                "http://127.0.0.1:4317"
+              ],
+              "environment": "local"
+            }
+          }
+        },
+        {
+          "id": "capture-branch",
+          "name": "capture-branch.xml",
+          "path": "fixtures/capture-branch.xml",
+          "format": "xml",
+          "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<blueprint schemaVersion=\"qa.blueprint/v1\" id=\"capture-branch\" name=\"로컬 로그인 QA\">\n  <flow id=\"login-flow\" entryNode=\"start\">\n    <variables><![CDATA[{\"username\":{\"from\":\"literal\",\"value\":\"qa-user\"},\"captured\":{\"from\":\"capture\",\"public\":true}}]]></variables>\n    <nodes>\n      <node id=\"start\" type=\"start\"></node>\n      <node id=\"open\" type=\"action\" action=\"launch\"><params><![CDATA[{\"target\":\"login\"}]]></params></node>\n      <node id=\"input\" type=\"action\" action=\"input\"><params><![CDATA[{\"selector\":\"username\",\"valueRef\":\"username\"}]]></params></node>\n      <node id=\"capture\" type=\"action\" action=\"captureText\"><params><![CDATA[{\"selector\":\"greeting\",\"variable\":\"captured\"}]]></params></node>\n      <node id=\"choose\" type=\"branch\"><condition><![CDATA[{\"variable\":\"captured\",\"operator\":\"equals\",\"value\":\"Welcome qa-user\"}]]></condition></node>\n      <node id=\"check\" type=\"assertion\" action=\"assertValue\"><params><![CDATA[{\"selector\":\"username\",\"expectedRef\":\"captured\"}]]></params></node>\n      <node id=\"end\" type=\"end\"></node>\n    </nodes>\n    <edges>\n      <edge from=\"start\" to=\"open\"/>\n      <edge from=\"open\" to=\"input\"/>\n      <edge from=\"input\" to=\"capture\"/>\n      <edge from=\"capture\" to=\"choose\"/>\n      <edge from=\"choose\" to=\"end\" label=\"true\"/>\n      <edge from=\"choose\" to=\"check\" label=\"false\"/>\n      <edge from=\"check\" to=\"end\"/>\n    </edges>\n  </flow>\n  <selectors><![CDATA[{\"schemaVersion\":\"qa.selectors/v1\",\"id\":\"demo-selectors\",\"selectors\":{\"username\":{\"web\":{\"strategy\":\"testId\",\"value\":\"username\"}},\"submit\":{\"web\":{\"strategy\":\"testId\",\"value\":\"submit\"}},\"greeting\":{\"web\":{\"strategy\":\"testId\",\"value\":\"greeting\"}}}}]]></selectors>\n  <target><![CDATA[{\"schemaVersion\":\"qa.target/v1\",\"id\":\"local-web\",\"platform\":\"web\",\"launchTargets\":{\"login\":\"http://127.0.0.1:4317\"},\"allowedOrigins\":[\"http://127.0.0.1:4317\"],\"environment\":\"local\"}]]></target>\n</blueprint>\n",
+          "sha256": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678",
+          "blueprint": {
+            "schemaVersion": "qa.blueprint/v1",
+            "id": "capture-branch",
+            "name": "로컬 로그인 QA",
+            "flow": {
+              "schemaVersion": "qa.flow/v1",
+              "id": "login-flow",
+              "entryNode": "start",
+              "nodes": [
+                {
+                  "id": "start",
+                  "type": "start"
+                },
+                {
+                  "id": "open",
+                  "type": "action",
+                  "action": "launch",
+                  "params": {
+                    "target": "login"
+                  }
+                },
+                {
+                  "id": "input",
+                  "type": "action",
+                  "action": "input",
+                  "params": {
+                    "selector": "username",
+                    "valueRef": "username"
+                  }
+                },
+                {
+                  "id": "capture",
+                  "type": "action",
+                  "action": "captureText",
+                  "params": {
+                    "selector": "greeting",
+                    "variable": "captured"
+                  }
+                },
+                {
+                  "id": "choose",
+                  "type": "branch",
+                  "condition": {
+                    "variable": "captured",
+                    "operator": "equals",
+                    "value": "Welcome qa-user"
+                  }
+                },
+                {
+                  "id": "check",
+                  "type": "assertion",
+                  "action": "assertValue",
+                  "params": {
+                    "selector": "username",
+                    "expectedRef": "captured"
+                  }
+                },
+                {
+                  "id": "end",
+                  "type": "end"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "start",
+                  "to": "open"
+                },
+                {
+                  "from": "open",
+                  "to": "input"
+                },
+                {
+                  "from": "input",
+                  "to": "capture"
+                },
+                {
+                  "from": "capture",
+                  "to": "choose"
+                },
+                {
+                  "from": "choose",
+                  "to": "end",
+                  "label": "true"
+                },
+                {
+                  "from": "choose",
+                  "to": "check",
+                  "label": "false"
+                },
+                {
+                  "from": "check",
+                  "to": "end"
+                }
+              ],
+              "variables": {
+                "username": {
+                  "from": "literal",
+                  "value": "qa-user"
+                },
+                "captured": {
+                  "from": "capture",
+                  "public": true
+                }
+              }
+            },
+            "selectors": {
+              "schemaVersion": "qa.selectors/v1",
+              "id": "demo-selectors",
+              "selectors": {
+                "username": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "username"
+                  }
+                },
+                "submit": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "submit"
+                  }
+                },
+                "greeting": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "greeting"
+                  }
+                }
+              }
+            },
+            "target": {
+              "schemaVersion": "qa.target/v1",
+              "id": "local-web",
+              "platform": "web",
+              "launchTargets": {
+                "login": "http://127.0.0.1:4317"
+              },
+              "allowedOrigins": [
+                "http://127.0.0.1:4317"
+              ],
+              "environment": "local"
+            }
+          }
+        }
+      ],
+      "instances": [
+        {
+          "id": "instance-1",
+          "assetId": "public-example"
+        },
+        {
+          "id": "instance-2",
+          "assetId": "capture-branch"
+        },
+        {
+          "id": "instance-3",
+          "assetId": "public-example"
+        }
+      ],
+      "links": [
+        {
+          "from": "instance-1",
+          "to": "instance-2"
+        },
+        {
+          "from": "instance-2",
+          "to": "instance-3"
+        }
+      ]
+    },
+    {
+      "id": "secret-reference-twice",
+      "assets": [
+        {
+          "id": "secret-reference",
+          "name": "secret-reference.xml",
+          "path": "fixtures/secret-reference.xml",
+          "format": "xml",
+          "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<blueprint schemaVersion=\"qa.blueprint/v1\" id=\"demo-login\" name=\"로컬 로그인 QA\">\n  <flow id=\"login-flow\" entryNode=\"start\">\n    <variables><![CDATA[{\"username\":{\"from\":\"secret\",\"ref\":\"fixture.login\"}}]]></variables>\n    <nodes>\n      <node id=\"start\" type=\"start\"></node>\n      <node id=\"open\" type=\"action\" action=\"launch\"><params><![CDATA[{\"target\":\"login\"}]]></params></node>\n      <node id=\"name\" type=\"action\" action=\"input\"><params><![CDATA[{\"selector\":\"username\",\"valueRef\":\"username\"}]]></params></node>\n      <node id=\"submit\" type=\"action\" action=\"tap\"><params><![CDATA[{\"selector\":\"submit\"}]]></params></node>\n      <node id=\"home\" type=\"assertion\" action=\"assertText\" timeoutMs=\"3000\"><params><![CDATA[{\"selector\":\"greeting\",\"expected\":\"Welcome qa-user\"}]]></params></node>\n      <node id=\"capture\" type=\"action\" action=\"screenshot\"><params><![CDATA[{}]]></params></node>\n      <node id=\"end\" type=\"end\"></node>\n    </nodes>\n    <edges>\n      <edge from=\"start\" to=\"open\"/>\n      <edge from=\"open\" to=\"name\"/>\n      <edge from=\"name\" to=\"submit\"/>\n      <edge from=\"submit\" to=\"home\"/>\n      <edge from=\"home\" to=\"capture\"/>\n      <edge from=\"capture\" to=\"end\"/>\n    </edges>\n  </flow>\n  <selectors><![CDATA[{\"schemaVersion\":\"qa.selectors/v1\",\"id\":\"demo-selectors\",\"selectors\":{\"username\":{\"web\":{\"strategy\":\"testId\",\"value\":\"username\"}},\"submit\":{\"web\":{\"strategy\":\"testId\",\"value\":\"submit\"}},\"greeting\":{\"web\":{\"strategy\":\"testId\",\"value\":\"greeting\"}}}}]]></selectors>\n  <target><![CDATA[{\"schemaVersion\":\"qa.target/v1\",\"id\":\"local-web\",\"platform\":\"web\",\"launchTargets\":{\"login\":\"http://127.0.0.1:4317\"},\"allowedOrigins\":[\"http://127.0.0.1:4317\"],\"environment\":\"local\"}]]></target>\n</blueprint>\n",
+          "sha256": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117",
+          "blueprint": {
+            "schemaVersion": "qa.blueprint/v1",
+            "id": "demo-login",
+            "name": "로컬 로그인 QA",
+            "flow": {
+              "schemaVersion": "qa.flow/v1",
+              "id": "login-flow",
+              "entryNode": "start",
+              "nodes": [
+                {
+                  "id": "start",
+                  "type": "start"
+                },
+                {
+                  "id": "open",
+                  "type": "action",
+                  "action": "launch",
+                  "params": {
+                    "target": "login"
+                  }
+                },
+                {
+                  "id": "name",
+                  "type": "action",
+                  "action": "input",
+                  "params": {
+                    "selector": "username",
+                    "valueRef": "username"
+                  }
+                },
+                {
+                  "id": "submit",
+                  "type": "action",
+                  "action": "tap",
+                  "params": {
+                    "selector": "submit"
+                  }
+                },
+                {
+                  "id": "home",
+                  "type": "assertion",
+                  "action": "assertText",
+                  "timeoutMs": 3000,
+                  "params": {
+                    "selector": "greeting",
+                    "expected": "Welcome qa-user"
+                  }
+                },
+                {
+                  "id": "capture",
+                  "type": "action",
+                  "action": "screenshot",
+                  "params": {}
+                },
+                {
+                  "id": "end",
+                  "type": "end"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "start",
+                  "to": "open"
+                },
+                {
+                  "from": "open",
+                  "to": "name"
+                },
+                {
+                  "from": "name",
+                  "to": "submit"
+                },
+                {
+                  "from": "submit",
+                  "to": "home"
+                },
+                {
+                  "from": "home",
+                  "to": "capture"
+                },
+                {
+                  "from": "capture",
+                  "to": "end"
+                }
+              ],
+              "variables": {
+                "username": {
+                  "from": "secret",
+                  "ref": "fixture.login"
+                }
+              }
+            },
+            "selectors": {
+              "schemaVersion": "qa.selectors/v1",
+              "id": "demo-selectors",
+              "selectors": {
+                "username": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "username"
+                  }
+                },
+                "submit": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "submit"
+                  }
+                },
+                "greeting": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "greeting"
+                  }
+                }
+              }
+            },
+            "target": {
+              "schemaVersion": "qa.target/v1",
+              "id": "local-web",
+              "platform": "web",
+              "launchTargets": {
+                "login": "http://127.0.0.1:4317"
+              },
+              "allowedOrigins": [
+                "http://127.0.0.1:4317"
+              ],
+              "environment": "local"
+            }
+          }
+        }
+      ],
+      "instances": [
+        {
+          "id": "instance-1",
+          "assetId": "secret-reference"
+        },
+        {
+          "id": "instance-2",
+          "assetId": "secret-reference"
+        }
+      ],
+      "links": [
+        {
+          "from": "instance-1",
+          "to": "instance-2"
+        }
+      ]
+    },
+    {
+      "id": "reject-disconnected",
+      "assets": [
+        {
+          "id": "public-example",
+          "name": "public-example.xml",
+          "path": "fixtures/public-example.xml",
+          "format": "xml",
+          "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<blueprint schemaVersion=\"qa.blueprint/v1\" id=\"demo-login\" name=\"로컬 로그인 QA\">\n  <flow id=\"login-flow\" entryNode=\"start\">\n    <variables><![CDATA[{\"username\":{\"from\":\"literal\",\"value\":\"qa-user\"}}]]></variables>\n    <nodes>\n      <node id=\"start\" type=\"start\"></node>\n      <node id=\"open\" type=\"action\" action=\"launch\"><params><![CDATA[{\"target\":\"login\"}]]></params></node>\n      <node id=\"name\" type=\"action\" action=\"input\"><params><![CDATA[{\"selector\":\"username\",\"valueRef\":\"username\"}]]></params></node>\n      <node id=\"submit\" type=\"action\" action=\"tap\"><params><![CDATA[{\"selector\":\"submit\"}]]></params></node>\n      <node id=\"home\" type=\"assertion\" action=\"assertText\" timeoutMs=\"3000\"><params><![CDATA[{\"selector\":\"greeting\",\"expected\":\"Welcome qa-user\"}]]></params></node>\n      <node id=\"capture\" type=\"action\" action=\"screenshot\"><params><![CDATA[{}]]></params></node>\n      <node id=\"end\" type=\"end\"></node>\n    </nodes>\n    <edges>\n      <edge from=\"start\" to=\"open\"/>\n      <edge from=\"open\" to=\"name\"/>\n      <edge from=\"name\" to=\"submit\"/>\n      <edge from=\"submit\" to=\"home\"/>\n      <edge from=\"home\" to=\"capture\"/>\n      <edge from=\"capture\" to=\"end\"/>\n    </edges>\n  </flow>\n  <selectors><![CDATA[{\"schemaVersion\":\"qa.selectors/v1\",\"id\":\"demo-selectors\",\"selectors\":{\"username\":{\"web\":{\"strategy\":\"testId\",\"value\":\"username\"}},\"submit\":{\"web\":{\"strategy\":\"testId\",\"value\":\"submit\"}},\"greeting\":{\"web\":{\"strategy\":\"testId\",\"value\":\"greeting\"}}}}]]></selectors>\n  <target><![CDATA[{\"schemaVersion\":\"qa.target/v1\",\"id\":\"local-web\",\"platform\":\"web\",\"launchTargets\":{\"login\":\"http://127.0.0.1:4317\"},\"allowedOrigins\":[\"http://127.0.0.1:4317\"],\"environment\":\"local\"}]]></target>\n</blueprint>\n",
+          "sha256": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+          "blueprint": {
+            "schemaVersion": "qa.blueprint/v1",
+            "id": "demo-login",
+            "name": "로컬 로그인 QA",
+            "flow": {
+              "schemaVersion": "qa.flow/v1",
+              "id": "login-flow",
+              "entryNode": "start",
+              "nodes": [
+                {
+                  "id": "start",
+                  "type": "start"
+                },
+                {
+                  "id": "open",
+                  "type": "action",
+                  "action": "launch",
+                  "params": {
+                    "target": "login"
+                  }
+                },
+                {
+                  "id": "name",
+                  "type": "action",
+                  "action": "input",
+                  "params": {
+                    "selector": "username",
+                    "valueRef": "username"
+                  }
+                },
+                {
+                  "id": "submit",
+                  "type": "action",
+                  "action": "tap",
+                  "params": {
+                    "selector": "submit"
+                  }
+                },
+                {
+                  "id": "home",
+                  "type": "assertion",
+                  "action": "assertText",
+                  "timeoutMs": 3000,
+                  "params": {
+                    "selector": "greeting",
+                    "expected": "Welcome qa-user"
+                  }
+                },
+                {
+                  "id": "capture",
+                  "type": "action",
+                  "action": "screenshot",
+                  "params": {}
+                },
+                {
+                  "id": "end",
+                  "type": "end"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "start",
+                  "to": "open"
+                },
+                {
+                  "from": "open",
+                  "to": "name"
+                },
+                {
+                  "from": "name",
+                  "to": "submit"
+                },
+                {
+                  "from": "submit",
+                  "to": "home"
+                },
+                {
+                  "from": "home",
+                  "to": "capture"
+                },
+                {
+                  "from": "capture",
+                  "to": "end"
+                }
+              ],
+              "variables": {
+                "username": {
+                  "from": "literal",
+                  "value": "qa-user"
+                }
+              }
+            },
+            "selectors": {
+              "schemaVersion": "qa.selectors/v1",
+              "id": "demo-selectors",
+              "selectors": {
+                "username": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "username"
+                  }
+                },
+                "submit": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "submit"
+                  }
+                },
+                "greeting": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "greeting"
+                  }
+                }
+              }
+            },
+            "target": {
+              "schemaVersion": "qa.target/v1",
+              "id": "local-web",
+              "platform": "web",
+              "launchTargets": {
+                "login": "http://127.0.0.1:4317"
+              },
+              "allowedOrigins": [
+                "http://127.0.0.1:4317"
+              ],
+              "environment": "local"
+            }
+          }
+        }
+      ],
+      "instances": [
+        {
+          "id": "instance-1",
+          "assetId": "public-example"
+        },
+        {
+          "id": "instance-2",
+          "assetId": "public-example"
+        }
+      ],
+      "links": []
+    },
+    {
+      "id": "reject-cycle",
+      "assets": [
+        {
+          "id": "public-example",
+          "name": "public-example.xml",
+          "path": "fixtures/public-example.xml",
+          "format": "xml",
+          "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<blueprint schemaVersion=\"qa.blueprint/v1\" id=\"demo-login\" name=\"로컬 로그인 QA\">\n  <flow id=\"login-flow\" entryNode=\"start\">\n    <variables><![CDATA[{\"username\":{\"from\":\"literal\",\"value\":\"qa-user\"}}]]></variables>\n    <nodes>\n      <node id=\"start\" type=\"start\"></node>\n      <node id=\"open\" type=\"action\" action=\"launch\"><params><![CDATA[{\"target\":\"login\"}]]></params></node>\n      <node id=\"name\" type=\"action\" action=\"input\"><params><![CDATA[{\"selector\":\"username\",\"valueRef\":\"username\"}]]></params></node>\n      <node id=\"submit\" type=\"action\" action=\"tap\"><params><![CDATA[{\"selector\":\"submit\"}]]></params></node>\n      <node id=\"home\" type=\"assertion\" action=\"assertText\" timeoutMs=\"3000\"><params><![CDATA[{\"selector\":\"greeting\",\"expected\":\"Welcome qa-user\"}]]></params></node>\n      <node id=\"capture\" type=\"action\" action=\"screenshot\"><params><![CDATA[{}]]></params></node>\n      <node id=\"end\" type=\"end\"></node>\n    </nodes>\n    <edges>\n      <edge from=\"start\" to=\"open\"/>\n      <edge from=\"open\" to=\"name\"/>\n      <edge from=\"name\" to=\"submit\"/>\n      <edge from=\"submit\" to=\"home\"/>\n      <edge from=\"home\" to=\"capture\"/>\n      <edge from=\"capture\" to=\"end\"/>\n    </edges>\n  </flow>\n  <selectors><![CDATA[{\"schemaVersion\":\"qa.selectors/v1\",\"id\":\"demo-selectors\",\"selectors\":{\"username\":{\"web\":{\"strategy\":\"testId\",\"value\":\"username\"}},\"submit\":{\"web\":{\"strategy\":\"testId\",\"value\":\"submit\"}},\"greeting\":{\"web\":{\"strategy\":\"testId\",\"value\":\"greeting\"}}}}]]></selectors>\n  <target><![CDATA[{\"schemaVersion\":\"qa.target/v1\",\"id\":\"local-web\",\"platform\":\"web\",\"launchTargets\":{\"login\":\"http://127.0.0.1:4317\"},\"allowedOrigins\":[\"http://127.0.0.1:4317\"],\"environment\":\"local\"}]]></target>\n</blueprint>\n",
+          "sha256": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+          "blueprint": {
+            "schemaVersion": "qa.blueprint/v1",
+            "id": "demo-login",
+            "name": "로컬 로그인 QA",
+            "flow": {
+              "schemaVersion": "qa.flow/v1",
+              "id": "login-flow",
+              "entryNode": "start",
+              "nodes": [
+                {
+                  "id": "start",
+                  "type": "start"
+                },
+                {
+                  "id": "open",
+                  "type": "action",
+                  "action": "launch",
+                  "params": {
+                    "target": "login"
+                  }
+                },
+                {
+                  "id": "name",
+                  "type": "action",
+                  "action": "input",
+                  "params": {
+                    "selector": "username",
+                    "valueRef": "username"
+                  }
+                },
+                {
+                  "id": "submit",
+                  "type": "action",
+                  "action": "tap",
+                  "params": {
+                    "selector": "submit"
+                  }
+                },
+                {
+                  "id": "home",
+                  "type": "assertion",
+                  "action": "assertText",
+                  "timeoutMs": 3000,
+                  "params": {
+                    "selector": "greeting",
+                    "expected": "Welcome qa-user"
+                  }
+                },
+                {
+                  "id": "capture",
+                  "type": "action",
+                  "action": "screenshot",
+                  "params": {}
+                },
+                {
+                  "id": "end",
+                  "type": "end"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "start",
+                  "to": "open"
+                },
+                {
+                  "from": "open",
+                  "to": "name"
+                },
+                {
+                  "from": "name",
+                  "to": "submit"
+                },
+                {
+                  "from": "submit",
+                  "to": "home"
+                },
+                {
+                  "from": "home",
+                  "to": "capture"
+                },
+                {
+                  "from": "capture",
+                  "to": "end"
+                }
+              ],
+              "variables": {
+                "username": {
+                  "from": "literal",
+                  "value": "qa-user"
+                }
+              }
+            },
+            "selectors": {
+              "schemaVersion": "qa.selectors/v1",
+              "id": "demo-selectors",
+              "selectors": {
+                "username": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "username"
+                  }
+                },
+                "submit": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "submit"
+                  }
+                },
+                "greeting": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "greeting"
+                  }
+                }
+              }
+            },
+            "target": {
+              "schemaVersion": "qa.target/v1",
+              "id": "local-web",
+              "platform": "web",
+              "launchTargets": {
+                "login": "http://127.0.0.1:4317"
+              },
+              "allowedOrigins": [
+                "http://127.0.0.1:4317"
+              ],
+              "environment": "local"
+            }
+          }
+        }
+      ],
+      "instances": [
+        {
+          "id": "instance-1",
+          "assetId": "public-example"
+        },
+        {
+          "id": "instance-2",
+          "assetId": "public-example"
+        }
+      ],
+      "links": [
+        {
+          "from": "instance-1",
+          "to": "instance-2"
+        },
+        {
+          "from": "instance-2",
+          "to": "instance-1"
+        }
+      ]
+    },
+    {
+      "id": "reject-target-mismatch",
+      "assets": [
+        {
+          "id": "public-example",
+          "name": "public-example.xml",
+          "path": "fixtures/public-example.xml",
+          "format": "xml",
+          "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<blueprint schemaVersion=\"qa.blueprint/v1\" id=\"demo-login\" name=\"로컬 로그인 QA\">\n  <flow id=\"login-flow\" entryNode=\"start\">\n    <variables><![CDATA[{\"username\":{\"from\":\"literal\",\"value\":\"qa-user\"}}]]></variables>\n    <nodes>\n      <node id=\"start\" type=\"start\"></node>\n      <node id=\"open\" type=\"action\" action=\"launch\"><params><![CDATA[{\"target\":\"login\"}]]></params></node>\n      <node id=\"name\" type=\"action\" action=\"input\"><params><![CDATA[{\"selector\":\"username\",\"valueRef\":\"username\"}]]></params></node>\n      <node id=\"submit\" type=\"action\" action=\"tap\"><params><![CDATA[{\"selector\":\"submit\"}]]></params></node>\n      <node id=\"home\" type=\"assertion\" action=\"assertText\" timeoutMs=\"3000\"><params><![CDATA[{\"selector\":\"greeting\",\"expected\":\"Welcome qa-user\"}]]></params></node>\n      <node id=\"capture\" type=\"action\" action=\"screenshot\"><params><![CDATA[{}]]></params></node>\n      <node id=\"end\" type=\"end\"></node>\n    </nodes>\n    <edges>\n      <edge from=\"start\" to=\"open\"/>\n      <edge from=\"open\" to=\"name\"/>\n      <edge from=\"name\" to=\"submit\"/>\n      <edge from=\"submit\" to=\"home\"/>\n      <edge from=\"home\" to=\"capture\"/>\n      <edge from=\"capture\" to=\"end\"/>\n    </edges>\n  </flow>\n  <selectors><![CDATA[{\"schemaVersion\":\"qa.selectors/v1\",\"id\":\"demo-selectors\",\"selectors\":{\"username\":{\"web\":{\"strategy\":\"testId\",\"value\":\"username\"}},\"submit\":{\"web\":{\"strategy\":\"testId\",\"value\":\"submit\"}},\"greeting\":{\"web\":{\"strategy\":\"testId\",\"value\":\"greeting\"}}}}]]></selectors>\n  <target><![CDATA[{\"schemaVersion\":\"qa.target/v1\",\"id\":\"local-web\",\"platform\":\"web\",\"launchTargets\":{\"login\":\"http://127.0.0.1:4317\"},\"allowedOrigins\":[\"http://127.0.0.1:4317\"],\"environment\":\"local\"}]]></target>\n</blueprint>\n",
+          "sha256": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+          "blueprint": {
+            "schemaVersion": "qa.blueprint/v1",
+            "id": "demo-login",
+            "name": "로컬 로그인 QA",
+            "flow": {
+              "schemaVersion": "qa.flow/v1",
+              "id": "login-flow",
+              "entryNode": "start",
+              "nodes": [
+                {
+                  "id": "start",
+                  "type": "start"
+                },
+                {
+                  "id": "open",
+                  "type": "action",
+                  "action": "launch",
+                  "params": {
+                    "target": "login"
+                  }
+                },
+                {
+                  "id": "name",
+                  "type": "action",
+                  "action": "input",
+                  "params": {
+                    "selector": "username",
+                    "valueRef": "username"
+                  }
+                },
+                {
+                  "id": "submit",
+                  "type": "action",
+                  "action": "tap",
+                  "params": {
+                    "selector": "submit"
+                  }
+                },
+                {
+                  "id": "home",
+                  "type": "assertion",
+                  "action": "assertText",
+                  "timeoutMs": 3000,
+                  "params": {
+                    "selector": "greeting",
+                    "expected": "Welcome qa-user"
+                  }
+                },
+                {
+                  "id": "capture",
+                  "type": "action",
+                  "action": "screenshot",
+                  "params": {}
+                },
+                {
+                  "id": "end",
+                  "type": "end"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "start",
+                  "to": "open"
+                },
+                {
+                  "from": "open",
+                  "to": "name"
+                },
+                {
+                  "from": "name",
+                  "to": "submit"
+                },
+                {
+                  "from": "submit",
+                  "to": "home"
+                },
+                {
+                  "from": "home",
+                  "to": "capture"
+                },
+                {
+                  "from": "capture",
+                  "to": "end"
+                }
+              ],
+              "variables": {
+                "username": {
+                  "from": "literal",
+                  "value": "qa-user"
+                }
+              }
+            },
+            "selectors": {
+              "schemaVersion": "qa.selectors/v1",
+              "id": "demo-selectors",
+              "selectors": {
+                "username": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "username"
+                  }
+                },
+                "submit": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "submit"
+                  }
+                },
+                "greeting": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "greeting"
+                  }
+                }
+              }
+            },
+            "target": {
+              "schemaVersion": "qa.target/v1",
+              "id": "local-web",
+              "platform": "web",
+              "launchTargets": {
+                "login": "http://127.0.0.1:4317"
+              },
+              "allowedOrigins": [
+                "http://127.0.0.1:4317"
+              ],
+              "environment": "local"
+            }
+          }
+        },
+        {
+          "id": "capture-branch",
+          "name": "capture-branch.xml",
+          "path": "fixtures/capture-branch.xml",
+          "format": "xml",
+          "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<blueprint schemaVersion=\"qa.blueprint/v1\" id=\"capture-branch\" name=\"로컬 로그인 QA\">\n  <flow id=\"login-flow\" entryNode=\"start\">\n    <variables><![CDATA[{\"username\":{\"from\":\"literal\",\"value\":\"qa-user\"},\"captured\":{\"from\":\"capture\",\"public\":true}}]]></variables>\n    <nodes>\n      <node id=\"start\" type=\"start\"></node>\n      <node id=\"open\" type=\"action\" action=\"launch\"><params><![CDATA[{\"target\":\"login\"}]]></params></node>\n      <node id=\"input\" type=\"action\" action=\"input\"><params><![CDATA[{\"selector\":\"username\",\"valueRef\":\"username\"}]]></params></node>\n      <node id=\"capture\" type=\"action\" action=\"captureText\"><params><![CDATA[{\"selector\":\"greeting\",\"variable\":\"captured\"}]]></params></node>\n      <node id=\"choose\" type=\"branch\"><condition><![CDATA[{\"variable\":\"captured\",\"operator\":\"equals\",\"value\":\"Welcome qa-user\"}]]></condition></node>\n      <node id=\"check\" type=\"assertion\" action=\"assertValue\"><params><![CDATA[{\"selector\":\"username\",\"expectedRef\":\"captured\"}]]></params></node>\n      <node id=\"end\" type=\"end\"></node>\n    </nodes>\n    <edges>\n      <edge from=\"start\" to=\"open\"/>\n      <edge from=\"open\" to=\"input\"/>\n      <edge from=\"input\" to=\"capture\"/>\n      <edge from=\"capture\" to=\"choose\"/>\n      <edge from=\"choose\" to=\"end\" label=\"true\"/>\n      <edge from=\"choose\" to=\"check\" label=\"false\"/>\n      <edge from=\"check\" to=\"end\"/>\n    </edges>\n  </flow>\n  <selectors><![CDATA[{\"schemaVersion\":\"qa.selectors/v1\",\"id\":\"demo-selectors\",\"selectors\":{\"username\":{\"web\":{\"strategy\":\"testId\",\"value\":\"username\"}},\"submit\":{\"web\":{\"strategy\":\"testId\",\"value\":\"submit\"}},\"greeting\":{\"web\":{\"strategy\":\"testId\",\"value\":\"greeting\"}}}}]]></selectors>\n  <target><![CDATA[{\"schemaVersion\":\"qa.target/v1\",\"id\":\"different-target\",\"platform\":\"web\",\"launchTargets\":{\"login\":\"http://127.0.0.1:4317\"},\"allowedOrigins\":[\"http://127.0.0.1:4317\"],\"environment\":\"local\"}]]></target>\n</blueprint>\n",
+          "sha256": "56e51a859a6225d20d1c78260357ef13c28baf103c2a915784b373d2eb17da5d",
+          "blueprint": {
+            "schemaVersion": "qa.blueprint/v1",
+            "id": "capture-branch",
+            "name": "로컬 로그인 QA",
+            "flow": {
+              "schemaVersion": "qa.flow/v1",
+              "id": "login-flow",
+              "entryNode": "start",
+              "nodes": [
+                {
+                  "id": "start",
+                  "type": "start"
+                },
+                {
+                  "id": "open",
+                  "type": "action",
+                  "action": "launch",
+                  "params": {
+                    "target": "login"
+                  }
+                },
+                {
+                  "id": "input",
+                  "type": "action",
+                  "action": "input",
+                  "params": {
+                    "selector": "username",
+                    "valueRef": "username"
+                  }
+                },
+                {
+                  "id": "capture",
+                  "type": "action",
+                  "action": "captureText",
+                  "params": {
+                    "selector": "greeting",
+                    "variable": "captured"
+                  }
+                },
+                {
+                  "id": "choose",
+                  "type": "branch",
+                  "condition": {
+                    "variable": "captured",
+                    "operator": "equals",
+                    "value": "Welcome qa-user"
+                  }
+                },
+                {
+                  "id": "check",
+                  "type": "assertion",
+                  "action": "assertValue",
+                  "params": {
+                    "selector": "username",
+                    "expectedRef": "captured"
+                  }
+                },
+                {
+                  "id": "end",
+                  "type": "end"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "start",
+                  "to": "open"
+                },
+                {
+                  "from": "open",
+                  "to": "input"
+                },
+                {
+                  "from": "input",
+                  "to": "capture"
+                },
+                {
+                  "from": "capture",
+                  "to": "choose"
+                },
+                {
+                  "from": "choose",
+                  "to": "end",
+                  "label": "true"
+                },
+                {
+                  "from": "choose",
+                  "to": "check",
+                  "label": "false"
+                },
+                {
+                  "from": "check",
+                  "to": "end"
+                }
+              ],
+              "variables": {
+                "username": {
+                  "from": "literal",
+                  "value": "qa-user"
+                },
+                "captured": {
+                  "from": "capture",
+                  "public": true
+                }
+              }
+            },
+            "selectors": {
+              "schemaVersion": "qa.selectors/v1",
+              "id": "demo-selectors",
+              "selectors": {
+                "username": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "username"
+                  }
+                },
+                "submit": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "submit"
+                  }
+                },
+                "greeting": {
+                  "web": {
+                    "strategy": "testId",
+                    "value": "greeting"
+                  }
+                }
+              }
+            },
+            "target": {
+              "schemaVersion": "qa.target/v1",
+              "id": "different-target",
+              "platform": "web",
+              "launchTargets": {
+                "login": "http://127.0.0.1:4317"
+              },
+              "allowedOrigins": [
+                "http://127.0.0.1:4317"
+              ],
+              "environment": "local"
+            }
+          }
+        }
+      ],
+      "instances": [
+        {
+          "id": "instance-1",
+          "assetId": "public-example"
+        },
+        {
+          "id": "instance-2",
+          "assetId": "capture-branch"
+        },
+        {
+          "id": "instance-3",
+          "assetId": "public-example"
+        }
+      ],
+      "links": [
+        {
+          "from": "instance-1",
+          "to": "instance-2"
+        },
+        {
+          "from": "instance-2",
+          "to": "instance-3"
+        }
+      ]
+    }
+  ]
+}

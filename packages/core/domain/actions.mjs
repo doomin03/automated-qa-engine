@@ -1,0 +1,2 @@
+export const ACTIONS = ['launch', 'tap', 'input', 'clear', 'waitFor', 'assertVisible', 'assertText', 'assertValue', 'screenshot', 'assertImage', 'assertLayout', 'assertInViewport', 'assertHitTarget', 'assertFocused', 'assertUrl', 'browserBack', 'captureText', 'captureValue'];
+export const NATIVE_ACTIONS = ['launch', 'tap', 'input', 'clear', 'waitFor', 'assertVisible', 'assertText', 'assertValue', 'screenshot', 'mobileBack', 'hideKeyboard'];

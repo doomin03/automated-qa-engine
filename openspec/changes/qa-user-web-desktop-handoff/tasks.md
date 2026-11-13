@@ -19,7 +19,12 @@
 - [x] 4.1 실제 XML CLI PASS/FAIL·JSONL/result/evidence와 npm run verify를 통과한다. 새 코드와 전체 기존 인수의 회귀 결과를 기록한다.
 - [x] 4.2 npm pack alpha.2를 sibling repo 없는 임시 consumer에 설치하여 package 이름 import 및 설치 CLI로 실제 Playwright PASS/FAIL·cancel·event/result/evidence 검증을 통과한다. tgz SHA-256/npm integrity와 bundle/fixture hash를 관리·Checker 담당에게 인계한다.
 
+## 5. 후속 구조 리뷰 문서
+
+- [x] 5.1 실제 alpha.2 코드에 기반한 docs/architecture/engine-review.md를 작성하고 문서 안내에 연결한다. 파이프라인·API/CLI/XML·정책·라이프사이클·현재 한계·기존 검증 근거를 소스와 대조하고 foundation 링크 검사 및 OpenSpec strict 검증으로 확인한다. 제품 코드·배포 artifact는 변경하지 않는다.
+
 ## Workflow follow-up
 
 - Checker 실제 웹→Desktop 인수 뒤 관리 검토에서 spec sync/archive 여부를 결정한다.
 - 2026-10-29 관리 명세 검토 후 7개 구현 task를 인수했다. npm run verify 39/39, 독립 tgz 소비 검증 성공. 근거는 docs/validation-alpha.2.md와 artifacts/package/verification.json이다. Checker pin 변경/교차 제품 통합은 관리 담당이 별도로 결정한다.
+- 후속 문서 task 5.1은 구조 리뷰·소스 대조·공개 XML validate·foundation/strict/diff 검사로 인수했다. 전체 39 tests는 재실행하지 않았다. 관리 custom adapter probe에서 action 실패 후 첫 step.finished observer 오류가 result 생성을 막는 경로를 재현하여 리뷰 11절에 기록했다. 결함 수정/새 회귀 테스트는 이번 문서 task 완료에 포함하지 않는다.

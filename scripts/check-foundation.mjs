@@ -48,7 +48,7 @@ for (const file of docs) {
 if (engine) {
   const manifest = JSON.parse(read('contracts/manifest.json'));
   assert.equal(manifest.owner, pkg.name);
-  assert.equal(manifest.contractVersion, '0.1.0-draft.1');
+  assert.equal(manifest.contractVersion, '0.3.0-draft.2');
   assert.equal(manifest.status, 'preview');
   assert.equal(manifest.engineVersion, pkg.version);
   assert(!manifest.outcomes.includes('unrun'));

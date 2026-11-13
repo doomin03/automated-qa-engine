@@ -41,7 +41,7 @@ test('unresolved callback is bounded by run timeout and closes browser',async t=
   const output=await executeBlueprint(blueprint,{adapter,reportDir,timeoutMs:1800,onEvent:event=>{
     if(event.type==='step.started' && event.nodeId==='name') return new Promise(()=>{});
   }});
-  assert.equal(output.result.outcome,'infra_error');assert.equal(output.result.failure.code,'ENGINE_ERROR');
+  assert.equal(output.result.outcome,'failed');assert.equal(output.result.failure.code,'TIMEOUT');assert.equal(output.result.failure.phase,'run');
   assert(Date.now()-started<6000);assert.equal(adapter.browser.isConnected(),false);await inspect(reportDir);
 });
 
@@ -79,3 +79,42 @@ test('hanging failure evidence is bounded and preserves original failure and cle
   assert.equal(output.result.cleanupErrors[0].code,'EVIDENCE_ERROR');await inspect(reportDir);
 });
 function compileActions(b) {return [...new Set(b.flow.nodes.flatMap(n=>n.action?[n.action]:[]))];}
+
+for(const mode of ['reject','hang','abort']) test('failed-step observer '+mode+' preserves original failure and terminal files',async()=>{
+  const blueprint=await loadBlueprint('examples/login.qa.json'),reportDir=await mkdtemp(join(tmpdir(),'aqa-failed-observer-'));
+  const controller=new AbortController();let closed=false,observerFailures=0;
+  const adapter={
+    getCapabilities:()=>({platforms:['web'],supportedActions:compileActions(blueprint)}),
+    startSession:async()=>{},performAction:async()=>{throw new QaError('ASSERTION_FAILED','Original test failure','step');},
+    captureEvidence:async()=>false,endSession:async()=>{closed=true;}
+  };
+  const started=Date.now();
+  const out=await executeBlueprint(blueprint,{adapter,reportDir,timeoutMs:250,signal:controller.signal,onEvent:event=>{
+    assert.equal(observerFailures,0,'No delivery after observer failure');
+    if(event.type==='step.finished'&&event.outcome==='failed') {
+      observerFailures++;
+      if(mode==='reject') throw new Error('private-observer-secret');
+      if(mode==='abort') setTimeout(()=>controller.abort(),10);
+      return new Promise(()=>{});
+    }
+  }});
+  assert(closed);assert(Date.now()-started<2000);assert.equal(observerFailures,1);
+  assert.equal(out.result.outcome,'failed');assert.equal(out.result.failure.code,'ASSERTION_FAILED');
+  assert.equal(out.result.failure.message,'Original test failure');
+  assert.deepEqual(out.result.cleanupErrors,[{code:'ENGINE_ERROR',message:'Event delivery interrupted after execution failure',phase:'cleanup',nodeId:'open'}]);
+  const saved=await inspect(reportDir);
+  assert(!JSON.stringify(saved).includes('private-observer-secret'));
+  assert.equal(validateSchema(JSON.parse(await readFile(join(saved.dir,'evidence.json'),'utf8'))).artifacts.length,0);
+});
+
+test('real browser assertion failure survives first observer rejection while reporting failure',async t=>{
+  const {blueprint,adapter,reportDir}=await env(t);
+  blueprint.flow.nodes.find(n=>n.id==='home').params.expected='deliberate failure';
+  blueprint.flow.nodes.find(n=>n.id==='home').timeoutMs=200;
+  const out=await executeBlueprint(blueprint,{adapter,reportDir,onEvent:event=>{
+    if(event.type==='step.finished'&&event.outcome==='failed') throw new Error('private-browser-observer-secret');
+  }});
+  assert.equal(out.result.outcome,'failed');assert(['ASSERTION_FAILED','TIMEOUT'].includes(out.result.failure.code));assert.equal(out.result.failure.phase,'step');assert.equal(out.result.failure.nodeId,'home');
+  assert.equal(out.result.artifacts.length,1);assert.equal(adapter.browser.isConnected(),false);
+  await inspect(reportDir);
+});

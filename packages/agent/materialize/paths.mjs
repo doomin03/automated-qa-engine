@@ -1,0 +1,1 @@
+export const safeName = name => typeof name === 'string' && /^(?!.*\.\.)(?:[A-Za-z0-9_-][A-Za-z0-9_.-]{0,63}\/)*[A-Za-z0-9_-][A-Za-z0-9_.-]{0,127}\.(png|json|woff|woff2|ttf|otf)$/.test(name) && name.split('/').every(part => !/^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(part));

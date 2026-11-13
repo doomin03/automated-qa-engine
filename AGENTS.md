@@ -1,8 +1,9 @@
 # Automated QA engine
 
+- 최신 재개 정보: [2026-11-13 핵심 컨텍스트](docs/handoff/context-20261113.md). 고정 alpha.10 인수와 locator apply 보류 상태를 먼저 확인한다.
 - 먼저 README.md, docs/architecture/repository-audit.md, docs/architecture/system-design.md와 작업 대상 OpenSpec change를 읽는다.
 - 문서는 한국어로 작성한다. OpenSpec 구조 제목과 SHALL/MUST는 영어로 유지한다.
-- 현재 범위는 P1 로컬 실행 preview다. Node CLI/Playwright/AI Blueprint 입력이 구현되어 있으며 원격 Agent와 모바일은 후속 단계다.
+- 초기 P1 로컬 preview 이후 사용자 승인으로 독립 패키지·시각/UX·유한 반복/capture·Appium adapter와 optional Agent까지 범위를 확장했다. 현재 alpha.6 Agent 교차 인수 결과는 docs/validation-alpha.6.md를 따른다. 모바일 protocol 구현과 실기기 미검증을 구분한다.
 - Engine는 독립 패키지의 실행 스키마와 interpreter/adapter/API/CLI를, Checker는 사용자 웹(시나리오 배포·진행 확인), Flutter Desktop(개별 테스트 개발·실제 실행 요청), 서버/업무 상태를 소유한다.
 - Flutter UI, Slack 인증, 중앙 사용자 DB를 engine에 도입하지 않는다. Dart/Node spike 후 ADR 001에서 Node ESM 런타임을 선택했다.
 - scratch-3d는 읽기 전용 참조다. origin/feature의 설계와 실제 구현을 구분하고 인증 실패를 추측으로 메우지 않는다.

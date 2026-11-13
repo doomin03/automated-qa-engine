@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "qa.composition/v1",
+  "assets": [
+    {
+      "id": "login",
+      "format": "xml",
+      "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<blueprint schemaVersion=\"qa.blueprint/v1\" id=\"demo-login\" name=\"로컬 로그인 QA\">\n  <flow id=\"login-flow\" entryNode=\"start\">\n    <variables><![CDATA[{\"username\":{\"from\":\"literal\",\"value\":\"qa-user\"}}]]></variables>\n    <nodes>\n      <node id=\"start\" type=\"start\"></node>\n      <node id=\"open\" type=\"action\" action=\"launch\"><params><![CDATA[{\"target\":\"login\"}]]></params></node>\n      <node id=\"name\" type=\"action\" action=\"input\"><params><![CDATA[{\"selector\":\"username\",\"valueRef\":\"username\"}]]></params></node>\n      <node id=\"submit\" type=\"action\" action=\"tap\"><params><![CDATA[{\"selector\":\"submit\"}]]></params></node>\n      <node id=\"home\" type=\"assertion\" action=\"assertText\" timeoutMs=\"3000\"><params><![CDATA[{\"selector\":\"greeting\",\"expected\":\"Welcome qa-user\"}]]></params></node>\n      <node id=\"capture\" type=\"action\" action=\"screenshot\"><params><![CDATA[{}]]></params></node>\n      <node id=\"end\" type=\"end\"></node>\n    </nodes>\n    <edges>\n      <edge from=\"start\" to=\"open\"/>\n      <edge from=\"open\" to=\"name\"/>\n      <edge from=\"name\" to=\"submit\"/>\n      <edge from=\"submit\" to=\"home\"/>\n      <edge from=\"home\" to=\"capture\"/>\n      <edge from=\"capture\" to=\"end\"/>\n    </edges>\n  </flow>\n  <selectors><![CDATA[{\"schemaVersion\":\"qa.selectors/v1\",\"id\":\"demo-selectors\",\"selectors\":{\"username\":{\"web\":{\"strategy\":\"testId\",\"value\":\"username\"}},\"submit\":{\"web\":{\"strategy\":\"testId\",\"value\":\"submit\"}},\"greeting\":{\"web\":{\"strategy\":\"testId\",\"value\":\"greeting\"}}}}]]></selectors>\n  <target><![CDATA[{\"schemaVersion\":\"qa.target/v1\",\"id\":\"local-web\",\"platform\":\"web\",\"launchTargets\":{\"login\":\"http://127.0.0.1:4317\"},\"allowedOrigins\":[\"http://127.0.0.1:4317\"],\"environment\":\"local\"}]]></target>\n</blueprint>\n",
+      "sha256": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+    }
+  ],
+  "instances": [
+    {
+      "id": "login-first",
+      "assetId": "login"
+    },
+    {
+      "id": "login-second",
+      "assetId": "login"
+    }
+  ],
+  "links": [
+    {
+      "from": "login-first",
+      "to": "login-second"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-12T03:39:49.867Z",
+  "files": {
+    "contracts/schemas/qa.schema.json": "d9757da86a96a6629cd4393bf8972f1d2a58e690ff31b782e17dd6e6c16063f2",
+    "contracts/agent-protocol/0.1.0-draft.1/openapi.json": "8c25e3c853f3b8d24003464d2ddc55a20675b7ac3f741a46c238a50ce4149490",
+    "contracts/agent-protocol/pin.json": "4d4252b7fce989e03b955010aed547ccd8110eee2020d1cfc579b03016804d79",
+    "contracts/releases/qa-blueprint-0.1.0-alpha.2.xml": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+    "contracts/releases/qa-blueprint-0.1.0-alpha.3.xml": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+    "contracts/releases/qa-blueprint-0.1.0-alpha.4.xml": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+    "contracts/releases/qa-blueprint-0.1.0-alpha.5.xml": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+    "contracts/releases/qa-blueprint-0.1.0-alpha.6.xml": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+    "contracts/releases/qa-blueprint-0.1.0-alpha.7.xml": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+    "contracts/releases/qa-blueprint-0.1.0-alpha.8.xml": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729",
+    "contracts/releases/qa-contract-0.1.0-alpha.1.json": "b9e125e56685243c82ab7e90a2f574a2538e0ea014f23f6d4035ff75fd0953f6",
+    "contracts/releases/qa-contract-0.1.0-alpha.2.json": "3d5be41a5b996dfada78b3aea5f8e17fa889e1c90a0e00c566eb00c717c00715",
+    "contracts/releases/qa-contract-0.1.0-alpha.3.json": "84522812b8192de6e0d37bab32a6872d4cbb4573bef9da8a491bbf7608fe09aa",
+    "contracts/releases/qa-contract-0.1.0-alpha.4.json": "ec786a5bf661eff3237c2804b1e9cafb195bb04c1b23c346090cbf022eb80a87",
+    "contracts/releases/qa-contract-0.1.0-alpha.5.json": "b183b90e0a8d93ab531b10ca409a4e657003fd85812a131f97479695283a5370",
+    "contracts/releases/qa-contract-0.1.0-alpha.6.json": "1f880001f8c653e51527ee9f92c5728aa7517b61adfb6c158d218a4a0542ed8d",
+    "contracts/releases/qa-contract-0.1.0-alpha.7.json": "36ceac45564c61f5f0b442136488838299a56846992b65ce360a5ea5c4dde7fe",
+    "contracts/releases/qa-contract-0.1.0-alpha.8.json": "638d48f182d12819ebd167d42457c7dceaa90928abb38c32a4867e3c94b10763"
+  }
+}

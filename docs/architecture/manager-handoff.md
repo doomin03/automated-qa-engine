@@ -1,6 +1,6 @@
 # 관리 에이전트 인계 — Engine
 
-아래는 alpha.1 기준 인계 기록이다. 2026-10-29 이후 수행한 alpha.2 독립 패키지/XML/lifecycle 작업의 최신 결과는 [alpha.2 검증·인계](../validation-alpha.2.md)를 따른다.
+아래는 alpha.1 기준 역사 인계 기록이다. 현재 runtime alpha.6 / contract 0.3.0-draft.1의 최신 결과와 정확한 tgz·bundle·Agent HTTP hash는 [alpha.6 검증·인계](../validation-alpha.6.md)와 [현재 구조 리뷰](engine-review.md)를 따른다. 직전 고정 배포는 [alpha.5 검증](../validation-alpha.5.md), alpha.2 기록은 [별도 검증](../validation-alpha.2.md)에 보존한다. alpha.6의 선택적 Agent는 실제 서버·독립 CLI·Chromium으로 인수했으며 Android/iOS 실기기는 미검증이다.
 
 확인일: 2026-10-29 (Asia/Seoul). 원본 지침은 `C:/Users/Domin/Downloads/automated_qa_codex_instructions/automated_qa_codex_instructions`의 README, CODEX_MASTER_PROMPT, ENGINE_CODEX_PROMPT, CONTRACTS_AND_EXAMPLES, PHASES_AND_ACCEPTANCE, WORKTREE_OPENSPEC_GUIDE다.
 

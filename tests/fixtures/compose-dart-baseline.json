@@ -1,0 +1,1353 @@
+{
+  "runtime": "3.13.4 (stable) (Tue Sep 15 01:01:15 2026 -0700) on \"windows_x64\"",
+  "results": [
+    {
+      "id": "public-example-twice",
+      "accepted": true,
+      "deterministic": true,
+      "blueprint": {
+        "schemaVersion": "qa.blueprint/v1",
+        "id": "xml-composition",
+        "name": "XML 블록 조합",
+        "flow": {
+          "schemaVersion": "qa.flow/v1",
+          "id": "xml-composition-flow",
+          "name": "XML 블록 조합",
+          "entryNode": "composition_start",
+          "variables": {
+            "b_27c5e16a9661f1a960610b41": {
+              "from": "literal",
+              "value": "qa-user"
+            },
+            "b_14e1a9a5261325ddfc6613b2": {
+              "from": "literal",
+              "value": "qa-user"
+            }
+          },
+          "nodes": [
+            {
+              "id": "composition_start",
+              "type": "start"
+            },
+            {
+              "id": "b_9730eee44327b40305a7630e",
+              "type": "action",
+              "action": "launch",
+              "params": {
+                "target": "login"
+              }
+            },
+            {
+              "id": "b_0fb9222666d227e85bdca6c2",
+              "type": "action",
+              "action": "input",
+              "params": {
+                "selector": "b_00e917e2465fb3f3eaba3ab1",
+                "valueRef": "b_27c5e16a9661f1a960610b41"
+              }
+            },
+            {
+              "id": "b_9082ac22234d852dee8d958a",
+              "type": "action",
+              "action": "tap",
+              "params": {
+                "selector": "b_c541869192de364a565e084c"
+              }
+            },
+            {
+              "id": "b_e9e726002e009976a9851d5f",
+              "type": "assertion",
+              "action": "assertText",
+              "timeoutMs": 3000,
+              "params": {
+                "selector": "b_626b428c781d892e6cf8ebca",
+                "expected": "Welcome qa-user"
+              }
+            },
+            {
+              "id": "b_3e22561e4629cae67c15b5ce",
+              "type": "action",
+              "action": "screenshot",
+              "params": {}
+            },
+            {
+              "id": "b_aaa7f0ee115d15e6f41211a9",
+              "type": "action",
+              "action": "launch",
+              "params": {
+                "target": "login"
+              }
+            },
+            {
+              "id": "b_ace3120f99968c7ca0b488c1",
+              "type": "action",
+              "action": "input",
+              "params": {
+                "selector": "b_cbda4ef63cf94ee1046230c2",
+                "valueRef": "b_14e1a9a5261325ddfc6613b2"
+              }
+            },
+            {
+              "id": "b_7b388f6afb1474221ac0f656",
+              "type": "action",
+              "action": "tap",
+              "params": {
+                "selector": "b_090e07a7c0305e1981a5f6ee"
+              }
+            },
+            {
+              "id": "b_535ef32bfaeafb79fcf7e34a",
+              "type": "assertion",
+              "action": "assertText",
+              "timeoutMs": 3000,
+              "params": {
+                "selector": "b_8325a46887a4bbec9de87f7a",
+                "expected": "Welcome qa-user"
+              }
+            },
+            {
+              "id": "b_3fbaddc8f3b1c0a288d42583",
+              "type": "action",
+              "action": "screenshot",
+              "params": {}
+            },
+            {
+              "id": "composition_end",
+              "type": "end"
+            }
+          ],
+          "edges": [
+            {
+              "from": "composition_start",
+              "to": "b_9730eee44327b40305a7630e"
+            },
+            {
+              "from": "b_9730eee44327b40305a7630e",
+              "to": "b_0fb9222666d227e85bdca6c2"
+            },
+            {
+              "from": "b_0fb9222666d227e85bdca6c2",
+              "to": "b_9082ac22234d852dee8d958a"
+            },
+            {
+              "from": "b_9082ac22234d852dee8d958a",
+              "to": "b_e9e726002e009976a9851d5f"
+            },
+            {
+              "from": "b_e9e726002e009976a9851d5f",
+              "to": "b_3e22561e4629cae67c15b5ce"
+            },
+            {
+              "from": "b_3e22561e4629cae67c15b5ce",
+              "to": "b_aaa7f0ee115d15e6f41211a9"
+            },
+            {
+              "from": "b_aaa7f0ee115d15e6f41211a9",
+              "to": "b_ace3120f99968c7ca0b488c1"
+            },
+            {
+              "from": "b_ace3120f99968c7ca0b488c1",
+              "to": "b_7b388f6afb1474221ac0f656"
+            },
+            {
+              "from": "b_7b388f6afb1474221ac0f656",
+              "to": "b_535ef32bfaeafb79fcf7e34a"
+            },
+            {
+              "from": "b_535ef32bfaeafb79fcf7e34a",
+              "to": "b_3fbaddc8f3b1c0a288d42583"
+            },
+            {
+              "from": "b_3fbaddc8f3b1c0a288d42583",
+              "to": "composition_end"
+            }
+          ]
+        },
+        "selectors": {
+          "schemaVersion": "qa.selectors/v1",
+          "id": "xml-composition-selectors",
+          "selectors": {
+            "b_00e917e2465fb3f3eaba3ab1": {
+              "web": {
+                "strategy": "testId",
+                "value": "username"
+              }
+            },
+            "b_c541869192de364a565e084c": {
+              "web": {
+                "strategy": "testId",
+                "value": "submit"
+              }
+            },
+            "b_626b428c781d892e6cf8ebca": {
+              "web": {
+                "strategy": "testId",
+                "value": "greeting"
+              }
+            },
+            "b_cbda4ef63cf94ee1046230c2": {
+              "web": {
+                "strategy": "testId",
+                "value": "username"
+              }
+            },
+            "b_090e07a7c0305e1981a5f6ee": {
+              "web": {
+                "strategy": "testId",
+                "value": "submit"
+              }
+            },
+            "b_8325a46887a4bbec9de87f7a": {
+              "web": {
+                "strategy": "testId",
+                "value": "greeting"
+              }
+            }
+          }
+        },
+        "target": {
+          "schemaVersion": "qa.target/v1",
+          "id": "local-web",
+          "platform": "web",
+          "launchTargets": {
+            "login": "http://127.0.0.1:4317"
+          },
+          "allowedOrigins": [
+            "http://127.0.0.1:4317"
+          ],
+          "environment": "local"
+        }
+      },
+      "sourceMap": {
+        "b_9730eee44327b40305a7630e": {
+          "instanceId": "instance-1",
+          "assetId": "public-example",
+          "sourceNodeId": "open",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_0fb9222666d227e85bdca6c2": {
+          "instanceId": "instance-1",
+          "assetId": "public-example",
+          "sourceNodeId": "name",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_9082ac22234d852dee8d958a": {
+          "instanceId": "instance-1",
+          "assetId": "public-example",
+          "sourceNodeId": "submit",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_e9e726002e009976a9851d5f": {
+          "instanceId": "instance-1",
+          "assetId": "public-example",
+          "sourceNodeId": "home",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_3e22561e4629cae67c15b5ce": {
+          "instanceId": "instance-1",
+          "assetId": "public-example",
+          "sourceNodeId": "capture",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_aaa7f0ee115d15e6f41211a9": {
+          "instanceId": "instance-2",
+          "assetId": "public-example",
+          "sourceNodeId": "open",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_ace3120f99968c7ca0b488c1": {
+          "instanceId": "instance-2",
+          "assetId": "public-example",
+          "sourceNodeId": "name",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_7b388f6afb1474221ac0f656": {
+          "instanceId": "instance-2",
+          "assetId": "public-example",
+          "sourceNodeId": "submit",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_535ef32bfaeafb79fcf7e34a": {
+          "instanceId": "instance-2",
+          "assetId": "public-example",
+          "sourceNodeId": "home",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_3fbaddc8f3b1c0a288d42583": {
+          "instanceId": "instance-2",
+          "assetId": "public-example",
+          "sourceNodeId": "capture",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        }
+      },
+      "canonicalBlueprintSha256": "e5ead6090dc5cf8c37a74a9ba35b2215dacba635623c67b0f9663671f8edcdaa"
+    },
+    {
+      "id": "capture-branch-twice",
+      "accepted": true,
+      "deterministic": true,
+      "blueprint": {
+        "schemaVersion": "qa.blueprint/v1",
+        "id": "xml-composition",
+        "name": "XML 블록 조합",
+        "flow": {
+          "schemaVersion": "qa.flow/v1",
+          "id": "xml-composition-flow",
+          "name": "XML 블록 조합",
+          "entryNode": "composition_start",
+          "variables": {
+            "b_27c5e16a9661f1a960610b41": {
+              "from": "literal",
+              "value": "qa-user"
+            },
+            "b_95eefc0f340e9ded7ca9246a": {
+              "from": "capture",
+              "public": true
+            },
+            "b_14e1a9a5261325ddfc6613b2": {
+              "from": "literal",
+              "value": "qa-user"
+            },
+            "b_33f2a05ecd0b32ab195d3fc6": {
+              "from": "capture",
+              "public": true
+            }
+          },
+          "nodes": [
+            {
+              "id": "composition_start",
+              "type": "start"
+            },
+            {
+              "id": "b_9730eee44327b40305a7630e",
+              "type": "action",
+              "action": "launch",
+              "params": {
+                "target": "login"
+              }
+            },
+            {
+              "id": "b_f69001059253044048781ab5",
+              "type": "action",
+              "action": "input",
+              "params": {
+                "selector": "b_00e917e2465fb3f3eaba3ab1",
+                "valueRef": "b_27c5e16a9661f1a960610b41"
+              }
+            },
+            {
+              "id": "b_3e22561e4629cae67c15b5ce",
+              "type": "action",
+              "action": "captureText",
+              "params": {
+                "selector": "b_626b428c781d892e6cf8ebca",
+                "variable": "b_95eefc0f340e9ded7ca9246a"
+              }
+            },
+            {
+              "id": "b_7c9c18267df7771fc6fe6bb8",
+              "type": "branch",
+              "condition": {
+                "variable": "b_95eefc0f340e9ded7ca9246a",
+                "operator": "equals",
+                "value": "Welcome qa-user"
+              }
+            },
+            {
+              "id": "b_74c85e541a72e20c2c8d9fbf",
+              "type": "assertion",
+              "action": "assertValue",
+              "params": {
+                "selector": "b_00e917e2465fb3f3eaba3ab1",
+                "expectedRef": "b_95eefc0f340e9ded7ca9246a"
+              }
+            },
+            {
+              "id": "b_aaa7f0ee115d15e6f41211a9",
+              "type": "action",
+              "action": "launch",
+              "params": {
+                "target": "login"
+              }
+            },
+            {
+              "id": "b_eb3c536227f509afb6d71d86",
+              "type": "action",
+              "action": "input",
+              "params": {
+                "selector": "b_cbda4ef63cf94ee1046230c2",
+                "valueRef": "b_14e1a9a5261325ddfc6613b2"
+              }
+            },
+            {
+              "id": "b_3fbaddc8f3b1c0a288d42583",
+              "type": "action",
+              "action": "captureText",
+              "params": {
+                "selector": "b_8325a46887a4bbec9de87f7a",
+                "variable": "b_33f2a05ecd0b32ab195d3fc6"
+              }
+            },
+            {
+              "id": "b_15aa548c5d836ec8cb06778e",
+              "type": "branch",
+              "condition": {
+                "variable": "b_33f2a05ecd0b32ab195d3fc6",
+                "operator": "equals",
+                "value": "Welcome qa-user"
+              }
+            },
+            {
+              "id": "b_c18bbf95af66b8c223e659b0",
+              "type": "assertion",
+              "action": "assertValue",
+              "params": {
+                "selector": "b_cbda4ef63cf94ee1046230c2",
+                "expectedRef": "b_33f2a05ecd0b32ab195d3fc6"
+              }
+            },
+            {
+              "id": "composition_end",
+              "type": "end"
+            }
+          ],
+          "edges": [
+            {
+              "from": "composition_start",
+              "to": "b_9730eee44327b40305a7630e"
+            },
+            {
+              "from": "b_9730eee44327b40305a7630e",
+              "to": "b_f69001059253044048781ab5"
+            },
+            {
+              "from": "b_f69001059253044048781ab5",
+              "to": "b_3e22561e4629cae67c15b5ce"
+            },
+            {
+              "from": "b_3e22561e4629cae67c15b5ce",
+              "to": "b_7c9c18267df7771fc6fe6bb8"
+            },
+            {
+              "from": "b_7c9c18267df7771fc6fe6bb8",
+              "to": "b_aaa7f0ee115d15e6f41211a9",
+              "label": "true"
+            },
+            {
+              "from": "b_7c9c18267df7771fc6fe6bb8",
+              "to": "b_74c85e541a72e20c2c8d9fbf",
+              "label": "false"
+            },
+            {
+              "from": "b_74c85e541a72e20c2c8d9fbf",
+              "to": "b_aaa7f0ee115d15e6f41211a9"
+            },
+            {
+              "from": "b_aaa7f0ee115d15e6f41211a9",
+              "to": "b_eb3c536227f509afb6d71d86"
+            },
+            {
+              "from": "b_eb3c536227f509afb6d71d86",
+              "to": "b_3fbaddc8f3b1c0a288d42583"
+            },
+            {
+              "from": "b_3fbaddc8f3b1c0a288d42583",
+              "to": "b_15aa548c5d836ec8cb06778e"
+            },
+            {
+              "from": "b_15aa548c5d836ec8cb06778e",
+              "to": "composition_end",
+              "label": "true"
+            },
+            {
+              "from": "b_15aa548c5d836ec8cb06778e",
+              "to": "b_c18bbf95af66b8c223e659b0",
+              "label": "false"
+            },
+            {
+              "from": "b_c18bbf95af66b8c223e659b0",
+              "to": "composition_end"
+            }
+          ]
+        },
+        "selectors": {
+          "schemaVersion": "qa.selectors/v1",
+          "id": "xml-composition-selectors",
+          "selectors": {
+            "b_00e917e2465fb3f3eaba3ab1": {
+              "web": {
+                "strategy": "testId",
+                "value": "username"
+              }
+            },
+            "b_c541869192de364a565e084c": {
+              "web": {
+                "strategy": "testId",
+                "value": "submit"
+              }
+            },
+            "b_626b428c781d892e6cf8ebca": {
+              "web": {
+                "strategy": "testId",
+                "value": "greeting"
+              }
+            },
+            "b_cbda4ef63cf94ee1046230c2": {
+              "web": {
+                "strategy": "testId",
+                "value": "username"
+              }
+            },
+            "b_090e07a7c0305e1981a5f6ee": {
+              "web": {
+                "strategy": "testId",
+                "value": "submit"
+              }
+            },
+            "b_8325a46887a4bbec9de87f7a": {
+              "web": {
+                "strategy": "testId",
+                "value": "greeting"
+              }
+            }
+          }
+        },
+        "target": {
+          "schemaVersion": "qa.target/v1",
+          "id": "local-web",
+          "platform": "web",
+          "launchTargets": {
+            "login": "http://127.0.0.1:4317"
+          },
+          "allowedOrigins": [
+            "http://127.0.0.1:4317"
+          ],
+          "environment": "local"
+        }
+      },
+      "sourceMap": {
+        "b_9730eee44327b40305a7630e": {
+          "instanceId": "instance-1",
+          "assetId": "capture-branch",
+          "sourceNodeId": "open",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_f69001059253044048781ab5": {
+          "instanceId": "instance-1",
+          "assetId": "capture-branch",
+          "sourceNodeId": "input",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_3e22561e4629cae67c15b5ce": {
+          "instanceId": "instance-1",
+          "assetId": "capture-branch",
+          "sourceNodeId": "capture",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_7c9c18267df7771fc6fe6bb8": {
+          "instanceId": "instance-1",
+          "assetId": "capture-branch",
+          "sourceNodeId": "choose",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_74c85e541a72e20c2c8d9fbf": {
+          "instanceId": "instance-1",
+          "assetId": "capture-branch",
+          "sourceNodeId": "check",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_aaa7f0ee115d15e6f41211a9": {
+          "instanceId": "instance-2",
+          "assetId": "capture-branch",
+          "sourceNodeId": "open",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_eb3c536227f509afb6d71d86": {
+          "instanceId": "instance-2",
+          "assetId": "capture-branch",
+          "sourceNodeId": "input",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_3fbaddc8f3b1c0a288d42583": {
+          "instanceId": "instance-2",
+          "assetId": "capture-branch",
+          "sourceNodeId": "capture",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_15aa548c5d836ec8cb06778e": {
+          "instanceId": "instance-2",
+          "assetId": "capture-branch",
+          "sourceNodeId": "choose",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_c18bbf95af66b8c223e659b0": {
+          "instanceId": "instance-2",
+          "assetId": "capture-branch",
+          "sourceNodeId": "check",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        }
+      },
+      "canonicalBlueprintSha256": "0c25224326bd60e3eec3eec82ddcd39de81b5b2f042c919032c52827a6dd7699"
+    },
+    {
+      "id": "mixed-three",
+      "accepted": true,
+      "deterministic": true,
+      "blueprint": {
+        "schemaVersion": "qa.blueprint/v1",
+        "id": "xml-composition",
+        "name": "XML 블록 조합",
+        "flow": {
+          "schemaVersion": "qa.flow/v1",
+          "id": "xml-composition-flow",
+          "name": "XML 블록 조합",
+          "entryNode": "composition_start",
+          "variables": {
+            "b_27c5e16a9661f1a960610b41": {
+              "from": "literal",
+              "value": "qa-user"
+            },
+            "b_14e1a9a5261325ddfc6613b2": {
+              "from": "literal",
+              "value": "qa-user"
+            },
+            "b_33f2a05ecd0b32ab195d3fc6": {
+              "from": "capture",
+              "public": true
+            },
+            "b_d580627f7d2ffdff7fc071b5": {
+              "from": "literal",
+              "value": "qa-user"
+            }
+          },
+          "nodes": [
+            {
+              "id": "composition_start",
+              "type": "start"
+            },
+            {
+              "id": "b_9730eee44327b40305a7630e",
+              "type": "action",
+              "action": "launch",
+              "params": {
+                "target": "login"
+              }
+            },
+            {
+              "id": "b_0fb9222666d227e85bdca6c2",
+              "type": "action",
+              "action": "input",
+              "params": {
+                "selector": "b_00e917e2465fb3f3eaba3ab1",
+                "valueRef": "b_27c5e16a9661f1a960610b41"
+              }
+            },
+            {
+              "id": "b_9082ac22234d852dee8d958a",
+              "type": "action",
+              "action": "tap",
+              "params": {
+                "selector": "b_c541869192de364a565e084c"
+              }
+            },
+            {
+              "id": "b_e9e726002e009976a9851d5f",
+              "type": "assertion",
+              "action": "assertText",
+              "timeoutMs": 3000,
+              "params": {
+                "selector": "b_626b428c781d892e6cf8ebca",
+                "expected": "Welcome qa-user"
+              }
+            },
+            {
+              "id": "b_3e22561e4629cae67c15b5ce",
+              "type": "action",
+              "action": "screenshot",
+              "params": {}
+            },
+            {
+              "id": "b_aaa7f0ee115d15e6f41211a9",
+              "type": "action",
+              "action": "launch",
+              "params": {
+                "target": "login"
+              }
+            },
+            {
+              "id": "b_eb3c536227f509afb6d71d86",
+              "type": "action",
+              "action": "input",
+              "params": {
+                "selector": "b_cbda4ef63cf94ee1046230c2",
+                "valueRef": "b_14e1a9a5261325ddfc6613b2"
+              }
+            },
+            {
+              "id": "b_3fbaddc8f3b1c0a288d42583",
+              "type": "action",
+              "action": "captureText",
+              "params": {
+                "selector": "b_8325a46887a4bbec9de87f7a",
+                "variable": "b_33f2a05ecd0b32ab195d3fc6"
+              }
+            },
+            {
+              "id": "b_15aa548c5d836ec8cb06778e",
+              "type": "branch",
+              "condition": {
+                "variable": "b_33f2a05ecd0b32ab195d3fc6",
+                "operator": "equals",
+                "value": "Welcome qa-user"
+              }
+            },
+            {
+              "id": "b_c18bbf95af66b8c223e659b0",
+              "type": "assertion",
+              "action": "assertValue",
+              "params": {
+                "selector": "b_cbda4ef63cf94ee1046230c2",
+                "expectedRef": "b_33f2a05ecd0b32ab195d3fc6"
+              }
+            },
+            {
+              "id": "b_05d1797ed51819796d5e97e2",
+              "type": "action",
+              "action": "launch",
+              "params": {
+                "target": "login"
+              }
+            },
+            {
+              "id": "b_d438888acd174ffb383629b7",
+              "type": "action",
+              "action": "input",
+              "params": {
+                "selector": "b_fb4e1a3a3eebe9362a1c096d",
+                "valueRef": "b_d580627f7d2ffdff7fc071b5"
+              }
+            },
+            {
+              "id": "b_5ab050b7fe0f50f8fee85ef9",
+              "type": "action",
+              "action": "tap",
+              "params": {
+                "selector": "b_178381f205088a57131a2427"
+              }
+            },
+            {
+              "id": "b_142d2ed79098a09362dfa4ee",
+              "type": "assertion",
+              "action": "assertText",
+              "timeoutMs": 3000,
+              "params": {
+                "selector": "b_25a5c33bae5d9bca47cd4718",
+                "expected": "Welcome qa-user"
+              }
+            },
+            {
+              "id": "b_3b9266fc919ef1285dc2741e",
+              "type": "action",
+              "action": "screenshot",
+              "params": {}
+            },
+            {
+              "id": "composition_end",
+              "type": "end"
+            }
+          ],
+          "edges": [
+            {
+              "from": "composition_start",
+              "to": "b_9730eee44327b40305a7630e"
+            },
+            {
+              "from": "b_9730eee44327b40305a7630e",
+              "to": "b_0fb9222666d227e85bdca6c2"
+            },
+            {
+              "from": "b_0fb9222666d227e85bdca6c2",
+              "to": "b_9082ac22234d852dee8d958a"
+            },
+            {
+              "from": "b_9082ac22234d852dee8d958a",
+              "to": "b_e9e726002e009976a9851d5f"
+            },
+            {
+              "from": "b_e9e726002e009976a9851d5f",
+              "to": "b_3e22561e4629cae67c15b5ce"
+            },
+            {
+              "from": "b_3e22561e4629cae67c15b5ce",
+              "to": "b_aaa7f0ee115d15e6f41211a9"
+            },
+            {
+              "from": "b_aaa7f0ee115d15e6f41211a9",
+              "to": "b_eb3c536227f509afb6d71d86"
+            },
+            {
+              "from": "b_eb3c536227f509afb6d71d86",
+              "to": "b_3fbaddc8f3b1c0a288d42583"
+            },
+            {
+              "from": "b_3fbaddc8f3b1c0a288d42583",
+              "to": "b_15aa548c5d836ec8cb06778e"
+            },
+            {
+              "from": "b_15aa548c5d836ec8cb06778e",
+              "to": "b_05d1797ed51819796d5e97e2",
+              "label": "true"
+            },
+            {
+              "from": "b_15aa548c5d836ec8cb06778e",
+              "to": "b_c18bbf95af66b8c223e659b0",
+              "label": "false"
+            },
+            {
+              "from": "b_c18bbf95af66b8c223e659b0",
+              "to": "b_05d1797ed51819796d5e97e2"
+            },
+            {
+              "from": "b_05d1797ed51819796d5e97e2",
+              "to": "b_d438888acd174ffb383629b7"
+            },
+            {
+              "from": "b_d438888acd174ffb383629b7",
+              "to": "b_5ab050b7fe0f50f8fee85ef9"
+            },
+            {
+              "from": "b_5ab050b7fe0f50f8fee85ef9",
+              "to": "b_142d2ed79098a09362dfa4ee"
+            },
+            {
+              "from": "b_142d2ed79098a09362dfa4ee",
+              "to": "b_3b9266fc919ef1285dc2741e"
+            },
+            {
+              "from": "b_3b9266fc919ef1285dc2741e",
+              "to": "composition_end"
+            }
+          ]
+        },
+        "selectors": {
+          "schemaVersion": "qa.selectors/v1",
+          "id": "xml-composition-selectors",
+          "selectors": {
+            "b_00e917e2465fb3f3eaba3ab1": {
+              "web": {
+                "strategy": "testId",
+                "value": "username"
+              }
+            },
+            "b_c541869192de364a565e084c": {
+              "web": {
+                "strategy": "testId",
+                "value": "submit"
+              }
+            },
+            "b_626b428c781d892e6cf8ebca": {
+              "web": {
+                "strategy": "testId",
+                "value": "greeting"
+              }
+            },
+            "b_cbda4ef63cf94ee1046230c2": {
+              "web": {
+                "strategy": "testId",
+                "value": "username"
+              }
+            },
+            "b_090e07a7c0305e1981a5f6ee": {
+              "web": {
+                "strategy": "testId",
+                "value": "submit"
+              }
+            },
+            "b_8325a46887a4bbec9de87f7a": {
+              "web": {
+                "strategy": "testId",
+                "value": "greeting"
+              }
+            },
+            "b_fb4e1a3a3eebe9362a1c096d": {
+              "web": {
+                "strategy": "testId",
+                "value": "username"
+              }
+            },
+            "b_178381f205088a57131a2427": {
+              "web": {
+                "strategy": "testId",
+                "value": "submit"
+              }
+            },
+            "b_25a5c33bae5d9bca47cd4718": {
+              "web": {
+                "strategy": "testId",
+                "value": "greeting"
+              }
+            }
+          }
+        },
+        "target": {
+          "schemaVersion": "qa.target/v1",
+          "id": "local-web",
+          "platform": "web",
+          "launchTargets": {
+            "login": "http://127.0.0.1:4317"
+          },
+          "allowedOrigins": [
+            "http://127.0.0.1:4317"
+          ],
+          "environment": "local"
+        }
+      },
+      "sourceMap": {
+        "b_9730eee44327b40305a7630e": {
+          "instanceId": "instance-1",
+          "assetId": "public-example",
+          "sourceNodeId": "open",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_0fb9222666d227e85bdca6c2": {
+          "instanceId": "instance-1",
+          "assetId": "public-example",
+          "sourceNodeId": "name",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_9082ac22234d852dee8d958a": {
+          "instanceId": "instance-1",
+          "assetId": "public-example",
+          "sourceNodeId": "submit",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_e9e726002e009976a9851d5f": {
+          "instanceId": "instance-1",
+          "assetId": "public-example",
+          "sourceNodeId": "home",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_3e22561e4629cae67c15b5ce": {
+          "instanceId": "instance-1",
+          "assetId": "public-example",
+          "sourceNodeId": "capture",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_aaa7f0ee115d15e6f41211a9": {
+          "instanceId": "instance-2",
+          "assetId": "capture-branch",
+          "sourceNodeId": "open",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_eb3c536227f509afb6d71d86": {
+          "instanceId": "instance-2",
+          "assetId": "capture-branch",
+          "sourceNodeId": "input",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_3fbaddc8f3b1c0a288d42583": {
+          "instanceId": "instance-2",
+          "assetId": "capture-branch",
+          "sourceNodeId": "capture",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_15aa548c5d836ec8cb06778e": {
+          "instanceId": "instance-2",
+          "assetId": "capture-branch",
+          "sourceNodeId": "choose",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_c18bbf95af66b8c223e659b0": {
+          "instanceId": "instance-2",
+          "assetId": "capture-branch",
+          "sourceNodeId": "check",
+          "sourceFile": "fixtures/capture-branch.xml",
+          "sourceHash": "36711afa20c718e35975d8f1d514b3f7091614cdc0c711900c86ce37ae1c9678"
+        },
+        "b_05d1797ed51819796d5e97e2": {
+          "instanceId": "instance-3",
+          "assetId": "public-example",
+          "sourceNodeId": "open",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_d438888acd174ffb383629b7": {
+          "instanceId": "instance-3",
+          "assetId": "public-example",
+          "sourceNodeId": "name",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_5ab050b7fe0f50f8fee85ef9": {
+          "instanceId": "instance-3",
+          "assetId": "public-example",
+          "sourceNodeId": "submit",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_142d2ed79098a09362dfa4ee": {
+          "instanceId": "instance-3",
+          "assetId": "public-example",
+          "sourceNodeId": "home",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        },
+        "b_3b9266fc919ef1285dc2741e": {
+          "instanceId": "instance-3",
+          "assetId": "public-example",
+          "sourceNodeId": "capture",
+          "sourceFile": "fixtures/public-example.xml",
+          "sourceHash": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+        }
+      },
+      "canonicalBlueprintSha256": "5bca2fe932b016687742eb7670e066b4b071f3ec9013227dc6f9f9fb714b0569"
+    },
+    {
+      "id": "secret-reference-twice",
+      "accepted": true,
+      "deterministic": true,
+      "blueprint": {
+        "schemaVersion": "qa.blueprint/v1",
+        "id": "xml-composition",
+        "name": "XML 블록 조합",
+        "flow": {
+          "schemaVersion": "qa.flow/v1",
+          "id": "xml-composition-flow",
+          "name": "XML 블록 조합",
+          "entryNode": "composition_start",
+          "variables": {
+            "b_27c5e16a9661f1a960610b41": {
+              "from": "secret",
+              "ref": "fixture.login"
+            },
+            "b_14e1a9a5261325ddfc6613b2": {
+              "from": "secret",
+              "ref": "fixture.login"
+            }
+          },
+          "nodes": [
+            {
+              "id": "composition_start",
+              "type": "start"
+            },
+            {
+              "id": "b_9730eee44327b40305a7630e",
+              "type": "action",
+              "action": "launch",
+              "params": {
+                "target": "login"
+              }
+            },
+            {
+              "id": "b_0fb9222666d227e85bdca6c2",
+              "type": "action",
+              "action": "input",
+              "params": {
+                "selector": "b_00e917e2465fb3f3eaba3ab1",
+                "valueRef": "b_27c5e16a9661f1a960610b41"
+              }
+            },
+            {
+              "id": "b_9082ac22234d852dee8d958a",
+              "type": "action",
+              "action": "tap",
+              "params": {
+                "selector": "b_c541869192de364a565e084c"
+              }
+            },
+            {
+              "id": "b_e9e726002e009976a9851d5f",
+              "type": "assertion",
+              "action": "assertText",
+              "timeoutMs": 3000,
+              "params": {
+                "selector": "b_626b428c781d892e6cf8ebca",
+                "expected": "Welcome qa-user"
+              }
+            },
+            {
+              "id": "b_3e22561e4629cae67c15b5ce",
+              "type": "action",
+              "action": "screenshot",
+              "params": {}
+            },
+            {
+              "id": "b_aaa7f0ee115d15e6f41211a9",
+              "type": "action",
+              "action": "launch",
+              "params": {
+                "target": "login"
+              }
+            },
+            {
+              "id": "b_ace3120f99968c7ca0b488c1",
+              "type": "action",
+              "action": "input",
+              "params": {
+                "selector": "b_cbda4ef63cf94ee1046230c2",
+                "valueRef": "b_14e1a9a5261325ddfc6613b2"
+              }
+            },
+            {
+              "id": "b_7b388f6afb1474221ac0f656",
+              "type": "action",
+              "action": "tap",
+              "params": {
+                "selector": "b_090e07a7c0305e1981a5f6ee"
+              }
+            },
+            {
+              "id": "b_535ef32bfaeafb79fcf7e34a",
+              "type": "assertion",
+              "action": "assertText",
+              "timeoutMs": 3000,
+              "params": {
+                "selector": "b_8325a46887a4bbec9de87f7a",
+                "expected": "Welcome qa-user"
+              }
+            },
+            {
+              "id": "b_3fbaddc8f3b1c0a288d42583",
+              "type": "action",
+              "action": "screenshot",
+              "params": {}
+            },
+            {
+              "id": "composition_end",
+              "type": "end"
+            }
+          ],
+          "edges": [
+            {
+              "from": "composition_start",
+              "to": "b_9730eee44327b40305a7630e"
+            },
+            {
+              "from": "b_9730eee44327b40305a7630e",
+              "to": "b_0fb9222666d227e85bdca6c2"
+            },
+            {
+              "from": "b_0fb9222666d227e85bdca6c2",
+              "to": "b_9082ac22234d852dee8d958a"
+            },
+            {
+              "from": "b_9082ac22234d852dee8d958a",
+              "to": "b_e9e726002e009976a9851d5f"
+            },
+            {
+              "from": "b_e9e726002e009976a9851d5f",
+              "to": "b_3e22561e4629cae67c15b5ce"
+            },
+            {
+              "from": "b_3e22561e4629cae67c15b5ce",
+              "to": "b_aaa7f0ee115d15e6f41211a9"
+            },
+            {
+              "from": "b_aaa7f0ee115d15e6f41211a9",
+              "to": "b_ace3120f99968c7ca0b488c1"
+            },
+            {
+              "from": "b_ace3120f99968c7ca0b488c1",
+              "to": "b_7b388f6afb1474221ac0f656"
+            },
+            {
+              "from": "b_7b388f6afb1474221ac0f656",
+              "to": "b_535ef32bfaeafb79fcf7e34a"
+            },
+            {
+              "from": "b_535ef32bfaeafb79fcf7e34a",
+              "to": "b_3fbaddc8f3b1c0a288d42583"
+            },
+            {
+              "from": "b_3fbaddc8f3b1c0a288d42583",
+              "to": "composition_end"
+            }
+          ]
+        },
+        "selectors": {
+          "schemaVersion": "qa.selectors/v1",
+          "id": "xml-composition-selectors",
+          "selectors": {
+            "b_00e917e2465fb3f3eaba3ab1": {
+              "web": {
+                "strategy": "testId",
+                "value": "username"
+              }
+            },
+            "b_c541869192de364a565e084c": {
+              "web": {
+                "strategy": "testId",
+                "value": "submit"
+              }
+            },
+            "b_626b428c781d892e6cf8ebca": {
+              "web": {
+                "strategy": "testId",
+                "value": "greeting"
+              }
+            },
+            "b_cbda4ef63cf94ee1046230c2": {
+              "web": {
+                "strategy": "testId",
+                "value": "username"
+              }
+            },
+            "b_090e07a7c0305e1981a5f6ee": {
+              "web": {
+                "strategy": "testId",
+                "value": "submit"
+              }
+            },
+            "b_8325a46887a4bbec9de87f7a": {
+              "web": {
+                "strategy": "testId",
+                "value": "greeting"
+              }
+            }
+          }
+        },
+        "target": {
+          "schemaVersion": "qa.target/v1",
+          "id": "local-web",
+          "platform": "web",
+          "launchTargets": {
+            "login": "http://127.0.0.1:4317"
+          },
+          "allowedOrigins": [
+            "http://127.0.0.1:4317"
+          ],
+          "environment": "local"
+        }
+      },
+      "sourceMap": {
+        "b_9730eee44327b40305a7630e": {
+          "instanceId": "instance-1",
+          "assetId": "secret-reference",
+          "sourceNodeId": "open",
+          "sourceFile": "fixtures/secret-reference.xml",
+          "sourceHash": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117"
+        },
+        "b_0fb9222666d227e85bdca6c2": {
+          "instanceId": "instance-1",
+          "assetId": "secret-reference",
+          "sourceNodeId": "name",
+          "sourceFile": "fixtures/secret-reference.xml",
+          "sourceHash": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117"
+        },
+        "b_9082ac22234d852dee8d958a": {
+          "instanceId": "instance-1",
+          "assetId": "secret-reference",
+          "sourceNodeId": "submit",
+          "sourceFile": "fixtures/secret-reference.xml",
+          "sourceHash": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117"
+        },
+        "b_e9e726002e009976a9851d5f": {
+          "instanceId": "instance-1",
+          "assetId": "secret-reference",
+          "sourceNodeId": "home",
+          "sourceFile": "fixtures/secret-reference.xml",
+          "sourceHash": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117"
+        },
+        "b_3e22561e4629cae67c15b5ce": {
+          "instanceId": "instance-1",
+          "assetId": "secret-reference",
+          "sourceNodeId": "capture",
+          "sourceFile": "fixtures/secret-reference.xml",
+          "sourceHash": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117"
+        },
+        "b_aaa7f0ee115d15e6f41211a9": {
+          "instanceId": "instance-2",
+          "assetId": "secret-reference",
+          "sourceNodeId": "open",
+          "sourceFile": "fixtures/secret-reference.xml",
+          "sourceHash": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117"
+        },
+        "b_ace3120f99968c7ca0b488c1": {
+          "instanceId": "instance-2",
+          "assetId": "secret-reference",
+          "sourceNodeId": "name",
+          "sourceFile": "fixtures/secret-reference.xml",
+          "sourceHash": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117"
+        },
+        "b_7b388f6afb1474221ac0f656": {
+          "instanceId": "instance-2",
+          "assetId": "secret-reference",
+          "sourceNodeId": "submit",
+          "sourceFile": "fixtures/secret-reference.xml",
+          "sourceHash": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117"
+        },
+        "b_535ef32bfaeafb79fcf7e34a": {
+          "instanceId": "instance-2",
+          "assetId": "secret-reference",
+          "sourceNodeId": "home",
+          "sourceFile": "fixtures/secret-reference.xml",
+          "sourceHash": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117"
+        },
+        "b_3fbaddc8f3b1c0a288d42583": {
+          "instanceId": "instance-2",
+          "assetId": "secret-reference",
+          "sourceNodeId": "capture",
+          "sourceFile": "fixtures/secret-reference.xml",
+          "sourceHash": "13e88680b3e52b01dadffaa23759010fe58e865d02dfcc96b1c289b777a11117"
+        }
+      },
+      "canonicalBlueprintSha256": "312f19781f3a6a7422f5120a6795d55accfbad9cdfb710ad97882d87fa3bd726"
+    },
+    {
+      "id": "reject-disconnected",
+      "accepted": false,
+      "diagnostic": {
+        "message": "모든 XML 블록을 하나의 순서로 연결하세요.",
+        "assetId": null,
+        "instanceId": null
+      }
+    },
+    {
+      "id": "reject-cycle",
+      "accepted": false,
+      "diagnostic": {
+        "message": "모든 XML 블록을 하나의 순서로 연결하세요.",
+        "assetId": null,
+        "instanceId": null
+      }
+    },
+    {
+      "id": "reject-target-mismatch",
+      "accepted": false,
+      "diagnostic": {
+        "message": "capture-branch.xml: 실행 대상 선언이 다른 블록과 다릅니다.",
+        "assetId": "capture-branch",
+        "instanceId": "instance-2"
+      }
+    }
+  ]
+}

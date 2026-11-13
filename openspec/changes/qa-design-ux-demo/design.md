@@ -2,7 +2,7 @@
 
 ## Context
 
-이 문서는 **미구현 공개 계약 초안**이다. Engine `0.1.0-alpha.2`, schema 계약 `0.1.0-draft.1` 및 기존 tgz/bundle/hash는 그대로 유지한다. 아래 action·필드·CLI는 현 배포물에 없다. 차기 runtime/contract 버전은 구현 인수 때 고정한다. Checker counterpart는 `automated-qa-checker/openspec/changes/qa-design-ux-demo`이며 현재 pin을 자동 변경하지 않는다.
+이 change는 2026-10-31 alpha.4 / contract 0.2.0-draft.1로 구현·독립 설치 인수했다. 이전 alpha.2/alpha.3 tgz/bundle/hash는 보존한다. 다음 초기 조사 문단은 변경 전 상태이며 현재 구현·인수는 tasks와 docs/validation-alpha.4.md를 따른다. Checker counterpart는 automated-qa-checker/openspec/changes/qa-design-ux-demo이고 pin은 관리 검토 후 소비한다.
 
 현재 `packages/core/compiler.mjs`는 선언형 action whitelist와 웹 capability를 검증한다. `runners/playwright/adapter.mjs`의 tap은 click, input은 fill이며 assertion은 visible/text/value다. PNG 증거 수집은 있지만 비교 기능은 없다. `packages/core/runner.mjs`는 screenshot artifact와 bounded observer/cleanup을 제공한다. `contracts/schemas/qa.schema.json`에는 profile/reference/측정 보고서가 없으며 XML은 `packages/core/documents.mjs`와 `xml.mjs`가 정규화한다. 기존 screenshot 단계 성공만으로 이미지 비교 성공을 판단할 수 없다.
 
@@ -13,6 +13,14 @@
 직접 Figma API/인증, 서버, 검사 도구 자체 UI 품질 개선, 고급 편집 UI, Appium 구현, OS 키보드 및 모바일 system back은 제외한다. Figma 등 도구 export/connector와 사용자 입력 UI는 Checker 또는 외부 도구 책임이다. XML에 arbitrary JS/shell을 추가하지 않는다.
 
 ## Decisions
+
+### Apply decision — 2026-10-31
+
+관리 승인으로 runtime `0.1.0-alpha.4`, contract `0.2.0-draft.1`을 다음 배포 목표로 사용한다. alpha.2/alpha.3 artifact는 불변이다. 구현 및 인수 중이며 아직 새 배포를 완료하지 않았다. PNG decoder는 공식 프로젝트 https://github.com/pngjs/pngjs 의 MIT `pngjs@7.0.0` exact pin으로 선택했다. 별도 worker에서만 decode/compare하며 byte/pixel/CRC/header 제한, deadline/AbortSignal 시 worker termination을 적용한다.
+
+공개 필드는 `Blueprint.references: DesignReference[]`, `target.profile: CaptureProfile`이다. profile은 `viewport:{width,height}`, `dpr`, `browserVersion`, `os`, `locale`, `colorScheme`, `fonts:[{family,path,sha256}]`, `readiness:{selector,timeoutMs}`를 가진다. font asset은 reference root에서 hash 검증하여 명시 FontFace로 로드하고 font readiness를 확인한다. 빈 fonts는 사용자 제공 font가 없음을 뜻하며 OS/browser 조건은 여전히 비교한다. image/reference profile은 target profile과 완전히 일치해야 한다. `assertImage.params={reference,image}`, `assertLayout.params={reference,rule}`, viewport/hit/focus의 params는 `{selector}`, URL은 `{expected}`, back은 `{}`이다.
+
+reference는 `id,profile,images,measurementRules`를 가진다. image의 `region`은 `"viewport"` 또는 `{x,y,width,height}`이고 `threshold`는 `{channelTolerance,maxDiffRatio}`이다. rule은 `id,selectorId,otherSelectorId?,metric,expected,tolerance,source:{document,sha256}`를 가진다. source hash는 사용자가 명시한 출처 JSON의 식별이며 임의 원격 fetch를 수행하지 않는다. reference 전체 hash도 snapshot/report에 기록한다. API `referenceRoot` / CLI `--reference-root`는 asset 접근의 명시 root이며 compile은 파일을 읽지 않는다. 보고서 `qa.checkReport/v1`은 `nodeId,kind,verdict,reason,referenceHash?,profileHash?,expected?,actual?,tolerance?,artifactRefs`를 가지며 `check-report` JSON artifact로 연결한다. adapter 관측은 runner가 schema와 byte 한도를 검증하고 파일명을 직접 생성하여 저장한다.
 
 ### Public draft: inputs, output and ownership
 
@@ -32,6 +40,8 @@ CLI 초안은 `aqa preset list`, `aqa preset expand <id> --version <version> --b
 
 ### Reference and comparable profile
 
+폰트 주입은 기본 동작이 아니다. `profile.injectFonts:true`를 명시한 경우에만 hash 검증한 FontFace를 주입하고 report의 `fontsInjected`로 표시한다. 이는 테스트 환경 조성이며 앱의 font 로딩 검증으로 주장하지 않는다. 기본 모드는 앱이 요청한 font 응답 hash, loaded FontFace family와 해당 관측 요소의 computed font-family를 확인하며 확인할 수 없는 font는 blocked다. 웹폰트 응답이 없는 시스템 font의 byte 동일성은 보장하지 않는다.
+
 첫 단위는 로컬 디렉터리 리소스이며 archive 자동 해제·원격 다운로드는 없다. 상대 path만 허용하고 realpath 기준 root containment, symlink 탈출 방지, SHA-256 재검증을 적용한다. PNG는 최대 파일 10 MiB, decode 후 16,777,216 pixels로 제한하는 초안을 채택한다. JSON/XML은 기존 입력 크기/depth 제한을 유지한다.
 
 profile은 viewport width/height(CSS px), DPR, browser/build 및 실행 OS 식별, locale/colorScheme, 요구 font 이름과 제공 font asset hash, readiness selector/timeout을 포함한다. local font가 실제 사용됨을 확인할 수 없거나 필수 profile이 관측과 다르면 비교불가다. 준비는 명시 selector와 `document.fonts.ready`를 한정된 시간 안에 확인하며 무기한 network-idle을 요구하지 않는다. 환경별 baseline이 필요하다. font 고정만으로 다른 OS rasterization 동등성을 주장하지 않는다.
@@ -45,6 +55,8 @@ PNG는 sRGB RGBA로 해석하고 투명도는 명시 흰 배경으로 합성한�
 수치 whitelist는 viewport 기준 `bbox.x/y/width/height`, `gap.horizontal = B.left - A.right`, `gap.vertical = B.top - A.bottom`, computed `font-size`다. 모든 값과 절대 tolerance는 CSS px이며 음수 gap은 겹침을 뜻한다. 각 rule은 기대값 출처(사용자 입력/도구 export 문서 식별과 해당 JSON hash)를 명시한다. `abs(actual - expected) <= tolerance`로 판단한다. selector는 기존 testId/text/role/css를 재사용하며 한 요소로 해석되어야 한다. 미발견은 기대 요소 부재 failed, 다중 매칭은 binding 진단 blocked다. 관측은 scroll/fill/click 없이 수행한다.
 
 ### UX presets and bounded coverage
+
+web-input의 `value` binding은 문자열 또는 `{secretRef:"reference"}`다. 비밀 binding은 `flow.variables.presetInput.from=secret`, input.valueRef 및 assertValue.expectedRef로 전개하며 실제 비밀값은 snapshot/report/PNG에 저장하지 않는다. literal value와의 호환을 유지한다. preset version CLI는 전역 `--version`과 충돌하지 않는 `--preset-version`을 사용한다. PNG는 8-bit 이하 non-interlaced만 지원하고 그 밖의 입력은 비교 전에 거부한다. 총 asset 128개/64 MiB 한도를 적용한다.
 
 기본 `web-input` preset은 launch/readiness → assertInViewport → assertHitTarget → tap → assertFocused → input → assertValue다. 기대 입력은 사용자 binding이며 secret은 기존 secretRef로만 전달한다. focus 검증 전에 fill하지 않는다. input은 기존 fill 의미이며 실제 타이핑/IME/키보드 출현을 검증한 것으로 표현하지 않는다.
 
@@ -73,4 +85,4 @@ Engine 공개 draft 관리 검토 → schema/actions/API 구현 및 계약 테�
 
 ## Open Questions
 
-제품 동작은 위 초안으로 고정하여 리뷰한다. 차기 배포 버전 및 PNG decoder 의존성의 정확 버전은 아직 배포하지 않았으므로 pending이다. apply 전 관리 검토에서 공개 계약과 dependency pin을 승인·기록한다. 이 계획 작성 자체는 구현 완료나 Checker pin 변경을 의미하지 않는다.
+pngjs 7.0.0, runtime alpha.4 및 contract 0.2.0-draft.1은 관리 승인 후 인수했다. 직접 Figma API, 전체 시각 가림 보장과 OS 키보드는 이 change의 지원 범위가 아니다. Appium은 별도 change로 추적하고 실제 기기 인수는 미완료다.

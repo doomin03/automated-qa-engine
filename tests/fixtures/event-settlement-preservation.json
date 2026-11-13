@@ -1,0 +1,9 @@
+{
+  "contracts/schemas/qa.schema.json": "d9757da86a96a6629cd4393bf8972f1d2a58e690ff31b782e17dd6e6c16063f2",
+  "contracts/schemas/qa-authoring.schema.json": "8f156fb6efcb97b9ab890b78ed38c5a0beb2830bd1389fab80a10b4e6c96d226",
+  "contracts/agent-protocol/0.1.0-draft.1/openapi.json": "8c25e3c853f3b8d24003464d2ddc55a20675b7ac3f741a46c238a50ce4149490",
+  "contracts/agent-protocol/pin.json": "4d4252b7fce989e03b955010aed547ccd8110eee2020d1cfc579b03016804d79",
+  "contracts/releases/qa-authoring-0.1.0-draft.1.json": "c38e5c1ce5caa0242cb6bdea81460252e6594f1a2e327388e0ef4ea4eda751a1",
+  "contracts/releases/qa-contract-0.1.0-alpha.9.json": "b675005334c1345ef66b47e95eb8042ce45ade23941a1a0747ef3cfc485ea335",
+  "contracts/releases/qa-blueprint-0.1.0-alpha.9.xml": "bc2210abfcdb7de02ae77e51598535da63e2dcd4c501670e5e160aa3fa3bd729"
+}

@@ -1,0 +1,10 @@
+{
+  "status": "local-preview",
+  "artifact": "qa-authoring-0.1.0-draft.1-engine-0.1.0-alpha.10.json",
+  "engineVersion": "0.1.0-alpha.10",
+  "authoringContractVersion": "0.1.0-draft.1",
+  "executionContractVersion": "0.3.0-draft.2",
+  "executionSchemaSha256": "d9757da86a96a6629cd4393bf8972f1d2a58e690ff31b782e17dd6e6c16063f2",
+  "schemaSha256": "8f156fb6efcb97b9ab890b78ed38c5a0beb2830bd1389fab80a10b4e6c96d226",
+  "sha256": "65c2510ad9ff79fe69888209f7180a7006afe9698f1721388744aee7870bb139"
+}
